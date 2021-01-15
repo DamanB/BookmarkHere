@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import Authentication from '../components/Authentication.vue';
+import Authentication from '../components/Authentication/Authentication.vue';
 
 export default {
   name: "Home",
