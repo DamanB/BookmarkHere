@@ -8,13 +8,17 @@
     <h3>Login or register to see your bookmarks!</h3>
     <div id="intro-bottom"></div>
   </div>
+  <Authentication />
 </template>
 
 <script>
-// @ is an alias to /src
+import Authentication from '../components/Authentication.vue';
 
 export default {
   name: "Home",
+  components: {
+    Authentication
+  }
 };
 </script>
 

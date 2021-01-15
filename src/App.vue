@@ -11,6 +11,7 @@
 
 <script>
 import Navbar from "./components/Navbar.vue";
+
 export default {
   components: {
     Navbar,
@@ -19,6 +20,8 @@ export default {
 </script>
 
 <style>
+@import './assets/styles/container.css';
+
 #app {
   font-family: "Montserrat", sans-serif;
 }
