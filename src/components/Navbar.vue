@@ -2,7 +2,7 @@
   <nav>
     <div id="navfront">
       <div id="navlogo">
-        <!--<img src="../assets/icons/bookmark-white.png" />-->
+        <img src="@/assets/icons/bookmark-white.png"/>
         <span id="navtitle">BookmarkHere!</span>
       </div>
     </div>
@@ -18,7 +18,11 @@
 </template>
 
 <script>
-export default {};
+export default {
+  name: 'Navbar',
+  setup(){
+  }
+};
 </script>
 
 <style>
@@ -94,6 +98,6 @@ nav {
 
 #tabs li:hover {
   cursor: pointer;
-  border-bottom: 3px solid black;
+  border-bottom: 2px solid black;
 }
 </style>
