@@ -1,0 +1,99 @@
+<template>
+  <nav>
+    <div id="navfront">
+      <div id="navlogo">
+        <!--<img src="../assets/icons/bookmark-white.png" />-->
+        <span id="navtitle">BookmarkHere!</span>
+      </div>
+    </div>
+    <div id="navbottom"></div>
+    <div id="navsecondary">
+      <ul id="tabs">
+        <li>Series</li>
+        <li>Movies</li>
+        <li>Books</li>
+      </ul>
+    </div>
+  </nav>
+</template>
+
+<script>
+export default {};
+</script>
+
+<style>
+nav {
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  margin: 0px;
+  padding: 0px;
+  width: 100%;
+  box-shadow: 0 8px 10px rgb(177, 177, 177);
+}
+
+#navfront {
+  width: 100%;
+  background: var(--mainColor);
+  height: 65px;
+
+  display: flex;
+  justify-content: space-between;
+  align-self: center;
+}
+
+#navlogo {
+  margin-left: 10px;
+  display: flex;
+  align-items: center;
+}
+
+#navlogo img {
+  width: auto;
+  height: 75%;
+  margin-right: 10px;
+}
+
+#navtitle {
+  color: white;
+  font-size: 25px;
+}
+
+#navbottom {
+  height: 5px;
+  background: linear-gradient(
+    to right,
+    var(--secColor) 0,
+    var(--primColor) 66%,
+    var(--thirColor) 100%
+  );
+  box-shadow: 0 8px 10px rgb(177, 177, 177);
+}
+
+#navsecondary {
+  height: 57px;
+  background-color: white;
+}
+
+#tabs {
+  list-style-type: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#tabs li {
+  font-size: 18px;
+  margin: auto 2%;
+  padding: 2px;
+}
+
+#tabs li:hover {
+  cursor: pointer;
+  border-bottom: 3px solid black;
+}
+</style>

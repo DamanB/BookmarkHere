@@ -1,13 +1,37 @@
 <template>
-  <router-view/>
+  <link
+    href="https://fonts.googleapis.com/css?family=Montserrat"
+    rel="stylesheet"
+  />
+  <Navbar />
+
+  <router-link to="/">Home</router-link>
+  <router-view />
 </template>
+
+<script>
+import Navbar from "./components/Navbar.vue";
+export default {
+  components: {
+    Navbar,
+  },
+};
+</script>
 
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+  font-family: "Montserrat", sans-serif;
+}
+
+:root {
+  --mainColor: rgb(9, 26, 73);
+  --primColor: rgb(153, 35, 163);
+  --secColor: rgb(0, 102, 255);
+  --thirColor: orange;
+}
+
+body {
+  background-color: rgb(212, 212, 212);
+  margin: 0px;
 }
 </style>
