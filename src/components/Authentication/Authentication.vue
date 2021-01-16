@@ -17,6 +17,11 @@ export default {
 </script>
 
 <style>
+.box-container{
+  min-width: 510px;
+  min-height: 460px;
+}
+
 .authentication-container {
   display: flex;
   justify-content: center;
@@ -40,11 +45,13 @@ export default {
 }
 
 .auth-container form label {
+  margin: 5px 0;
   display: flex;
   flex-direction: column;
 }
 
 .authTitle {
+  margin-bottom: 5px;
   text-align: center;
   font-size: 25px;
 }
