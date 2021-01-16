@@ -15,8 +15,9 @@ const register = async (email, password, displayName) => {
         }
         //update display name
         await response.user.updateProfile({ displayName })
+        //no error if last line successful
         error.value = null;
-        return response
+        return response.user
     }
     catch (err) {
         var errorCode = err.code;

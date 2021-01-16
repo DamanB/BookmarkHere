@@ -13,6 +13,7 @@
                 </label>
                 <label>
                     <button name="submit">Login!</button>
+                    <span class="authInfo authError">{{ error }}</span>
                 </label>
             </form>
         </div>
@@ -22,20 +23,26 @@
 
 <script>
 import { ref } from 'vue'
+import userLogin from '@/composables/authentication/userLogin'
+
 export default {
   setup() {
     //Standards
     const reg = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$/
 
+    //composables
+    const {error, login} = userLogin()
+
     // Login
-    const loginEmailError = ref(null);
-    const loginEmail = ref(null);
+    const loginEmailError = ref(null)
+    const loginEmail = ref(null)
 
-    const loginPasswordError = ref(null);
-    const loginPassword = ref(null);
+    const loginPasswordError = ref(null)
+    const loginPassword = ref(null)
 
-    const loginSubmit = () => {
-        var noFormErrors = true;
+    const loginSubmit = async () => {
+        var noFormErrors = true
+
         //Test email info
         loginEmailError.value = null;
         if (!loginEmail.value)
@@ -60,12 +67,22 @@ export default {
         //Peform login if success
         if (noFormErrors)
         {
-            console.log("LOGGING ON");
+            await login(loginEmail.value, loginPassword.value)
+            if (!error.value)
+            {
+                console.log("LOGIN SUCCESS")
+            }
         }
-    };
-    return { loginEmailError, loginEmail, loginPasswordError, loginPassword, loginSubmit };
+    }
+
+    return { 
+        loginEmailError, loginEmail, 
+        loginPasswordError, loginPassword, 
+        loginSubmit, error 
+    }
+
   }
-};
+}
 </script>
 
 <style>
