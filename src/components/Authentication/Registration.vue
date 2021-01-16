@@ -8,8 +8,8 @@
                     <span class="authInfo authError">{{ regEmailError }}</span>
                 </label>
                 <label>Password:
-                    <input type="password" name="regPassword" v-model="regPassword" required>
-                    <span class="authInfo">(Minimum 6 charcters long)</span>
+                    <input type="password" name="regPassword" v-model="regPassword" placeholder="Minimum 6 charcters required" required>
+                    <!-- <span class="authInfo">(Minimum 6 charcters long)</span> -->
                     <span class="authInfo authError">{{ regPasswordError }}</span>
                 </label>
                 <label>Confirm Password:
@@ -67,7 +67,7 @@ export default {
         }
         else if (regPassword.value.length < 6)
         {
-            regPasswordError.value = "Password must be atleast 6 characters long"
+            regPasswordError.value = "Minimum 6 characters required"
             noFormErrors = false;
         }
 
