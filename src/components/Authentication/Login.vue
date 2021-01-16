@@ -60,7 +60,7 @@ export default {
         //Peform login if success
         if (noFormErrors)
         {
-            console.log();
+            console.log("LOGGING ON");
         }
     };
     return { loginEmailError, loginEmail, loginPasswordError, loginPassword, loginSubmit };
