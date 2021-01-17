@@ -137,7 +137,7 @@ export default {
 #userDisplayName {
   font-size: 20px;
   border-bottom: 1px solid white;
-  margin-right: 13px;
+  margin-right: 15px;
 }
 
 .menu-icon{
