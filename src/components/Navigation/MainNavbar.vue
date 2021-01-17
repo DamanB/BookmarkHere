@@ -148,7 +148,7 @@ export default {
   width: 28px;
   height: 2px;
   background-color: white;
-  transition-duration: .2s;
+  transition-duration: .15s;
 }
 
 #user-dropdown-content {
