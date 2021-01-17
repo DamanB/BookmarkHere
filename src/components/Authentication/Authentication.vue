@@ -1,11 +1,15 @@
 <template>
  <div class="authentication-container">
-   <Login />
-   <Registration />
+   <Login @userLoggedIn="enterUserView"/>
+   <Registration @userRegistered="enterUserView"/>
 </div>
 </template>
 
 <script>
+//Dependancies
+import { useRouter } from 'vue-router'
+import UserBookmarksVue from '../../views/UserBookmarks.vue';
+
 //Components
 import Login from './Login.vue';
 import Registration from './Registration.vue';
@@ -13,6 +17,18 @@ import Registration from './Registration.vue';
 export default {
   name: "Authentication",
   components: {Login, Registration},
+
+  setup(){
+    const router = useRouter()
+
+    const enterUserView = () => {
+      router.push({ name: 'UserBookmarks' })
+    }
+
+
+    return {enterUserView}
+  }
+
 };
 </script>
 

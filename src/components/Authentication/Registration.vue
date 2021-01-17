@@ -35,7 +35,7 @@ import { ref } from 'vue'
 import userRegistration from '@/composables/authentication/userRegistration'
 
 export default {
-  setup(){
+  setup(props, context){
     //Standards
     const reg = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$/
     const notJustWhiteSpace = /\S/
@@ -120,6 +120,11 @@ export default {
         if (noFormErrors)
         {
             await register(regEmail.value, regPassword.value, regName.value)
+            if (!error.value)
+            {
+                //Registration and inital Login success on backend
+                context.emit('userRegistered');
+            }
         }
     };
     

@@ -26,7 +26,7 @@ import { ref } from 'vue'
 import userLogin from '@/composables/authentication/userLogin'
 
 export default {
-  setup() {
+  setup(props, context) {
     //Standards
     const reg = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$/
 
@@ -70,7 +70,8 @@ export default {
             await login(loginEmail.value, loginPassword.value)
             if (!error.value)
             {
-                console.log("LOGIN SUCCESS")
+                //Login success on backend
+                context.emit('userLoggedIn');
             }
         }
     }
