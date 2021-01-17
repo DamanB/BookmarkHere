@@ -3,20 +3,12 @@
     href="https://fonts.googleapis.com/css?family=Montserrat"
     rel="stylesheet"
   />
-  <Navbar />
-
-  <router-link to="/">Home</router-link>
   <router-view />
 </template>
 
 <script>
-import Navbar from "./components/Navigation/Navbar.vue";
-
 export default {
-  components: {
-    Navbar,
-  },
-};
+}
 </script>
 
 <style>

@@ -41,7 +41,7 @@ export default {
     const notJustWhiteSpace = /\S/
 
     //Composables
-    const {error, register} = userRegistration()
+    const {register, error} = userRegistration()
 
     //Register
     const regEmail = ref(null);

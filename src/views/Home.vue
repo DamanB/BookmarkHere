@@ -1,4 +1,5 @@
 <template>
+  <Navbar />
   <div id="intro">
     <h2>Welcome to</h2>
     <div id="title-container">
@@ -13,10 +14,12 @@
 
 <script>
 import Authentication from '../components/Authentication/Authentication.vue';
+import Navbar from "@/components/Navigation/Navbar.vue";
 
 export default {
   name: "Home",
   components: {
+    Navbar,
     Authentication
   }
 };

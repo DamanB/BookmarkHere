@@ -34,19 +34,7 @@ const register = async (email, password, displayName) => {
 }
 
 const userRegistration = () => {
-    return { error, register }
+    return { register, error }
 }
 
 export default userRegistration
-
-/*
-        if (errorCode == 'auth/user-not-found' || errorCode == 'auth/wrong-password') {
-            error.value = "Credential mismatch!";
-        }
-        else if (errorCode == 'auth/invalid-email') {
-            error.value = "This email is not valid!";
-        }
-        else {
-            error.value = "Login unsuccessful!";
-        }
-        */
