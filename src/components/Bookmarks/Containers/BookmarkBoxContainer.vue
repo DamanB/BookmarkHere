@@ -1,19 +1,20 @@
 <template>
-  <div id="box-container">
-      <h1>This is the box container</h1>
-  </div>      
+  <div class="box-container">
+    <div class="container-content">
+      This is the box container
+    </div>
+    <div class="container-bottom"></div>
+  </div>
 </template>
 
 <script>
-export default {
-
-}
+export default {};
 </script>
 
 <style>
-#box-container{
-    background: white;
-    max-width: 500px;
-    min-height: 500px;
+template{
+    min-width: 500px;
+    min-height: 400px;  
 }
+
 </style>

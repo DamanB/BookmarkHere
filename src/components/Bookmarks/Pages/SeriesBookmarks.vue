@@ -1,25 +1,39 @@
 <template>
-<div id="series-bookmarks-container">
-    <h1>Hello World!</h1>
-    <BookmarkBoxContainer />
-</div>
+  <div id="series-bookmarks-container">
+    <div class="container"><BookmarkBoxContainer /></div>
+    <div class="container"><BookmarkBoxContainer /></div>
+    <div class="container"><BookmarkBoxContainer /></div>
+    <div class="container"><BookmarkBoxContainer /></div>
+    <div class="container"><BookmarkBoxContainer /></div>
+    <div class="container"><BookmarkBoxContainer /></div>
+    <div class="container"><BookmarkBoxContainer /></div>
+    <div class="container"><BookmarkBoxContainer /></div>
+    <div class="container"><BookmarkBoxContainer /></div>
+  </div>
 </template>
 
 <script>
 //components
-import BookmarkBoxContainer from '../Containers/BookmarkBoxContainer.vue'
+import BookmarkBoxContainer from "../Containers/BookmarkBoxContainer.vue";
 
 export default {
-    components: {
-    BookmarkBoxContainer
-}
-
-}
+  components: {
+    BookmarkBoxContainer,
+  },
+};
 </script>
 
 <style>
-#series-bookmarks-container
-{
-    margin-top: 130px;
+#series-bookmarks-container {
+  margin-top: 150px;
+  display: flex;
+  justify-content: space-evenly;
+  flex-flow: row wrap;
+}
+
+.container {
+  min-width: 500px;
+  min-height: 400px;
+  margin: 20px;
 }
 </style>

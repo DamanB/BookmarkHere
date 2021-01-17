@@ -1,6 +1,6 @@
 <template>
   <div id="login-container" class="auth-box-container">
-        <div class="container-content auth-container">
+        <div class="auth-container">
             <form name="loginForm" @submit.prevent="loginSubmit" novalidate>
                 <span class="authTitle">Login!</span>
                 <label>Email:

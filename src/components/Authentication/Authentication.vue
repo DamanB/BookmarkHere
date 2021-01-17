@@ -1,39 +1,44 @@
 <template>
- <div class="authentication-container">
-   <Login @userLoggedIn="enterUserView"/>
-   <Registration @userRegistered="enterUserView"/>
-</div>
+  <div class="authentication-container">
+    <Login @userLoggedIn="enterUserView" />
+    <Registration @userRegistered="enterUserView" />
+  </div>
 </template>
 
 <script>
 //Dependancies
-import { useRouter } from 'vue-router'
-import UserBookmarksVue from '../../views/UserBookmarks.vue';
+import { useRouter } from "vue-router";
+import UserBookmarksVue from "../../views/UserBookmarks.vue";
 
 //Components
-import Login from './Login.vue';
-import Registration from './Registration.vue';
+import Login from "./Login.vue";
+import Registration from "./Registration.vue";
 
 export default {
   name: "Authentication",
-  components: {Login, Registration},
+  components: { Login, Registration },
 
-  setup(){
-    const router = useRouter()
+  setup() {
+    const router = useRouter();
 
     const enterUserView = () => {
-      router.push({ name: 'UserBookmarks' })
-    }
+      router.push({ name: "UserBookmarks" });
+    };
 
-
-    return {enterUserView}
-  }
-
+    return { enterUserView };
+  },
 };
 </script>
 
 <style>
-.auth-box-container{
+.auth-box-container {
+  position: relative;
+  margin: 2%;
+  text-align: left;
+  background-color: white;
+  box-shadow: 0 8px 10px rgb(177, 177, 177);
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
   min-width: 510px;
   min-height: 460px;
 }
