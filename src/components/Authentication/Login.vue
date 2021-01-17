@@ -1,5 +1,5 @@
 <template>
-  <div id="login-container" class="box-container">
+  <div id="login-container" class="auth-box-container">
         <div class="container-content auth-container">
             <form name="loginForm" @submit.prevent="loginSubmit" novalidate>
                 <span class="authTitle">Login!</span>

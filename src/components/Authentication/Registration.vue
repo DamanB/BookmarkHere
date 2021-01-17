@@ -1,5 +1,5 @@
 <template>
-      <div id="register-container" class="box-container">
+      <div id="register-container" class="auth-box-container">
         <div class="container-content auth-container">
             <form name="registerForm" @submit.prevent="registrationSubmit" novalidate="true">
                 <span class="authTitle">Join Here!</span>

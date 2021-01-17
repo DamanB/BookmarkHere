@@ -33,7 +33,7 @@ export default {
 </script>
 
 <style>
-.box-container{
+.auth-box-container{
   min-width: 510px;
   min-height: 460px;
 }
