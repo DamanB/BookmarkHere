@@ -1,18 +1,22 @@
 <template>
   <Navbar />
-  <h1>Here are your bookmarks</h1>
+  <SeriesBookmarks />
+  
 </template>
 
 <script>
 //Dependencies
 import { ref } from 'vue'
+//composables
+import getUser from "@/composables/authentication/getUser";
 //Components
 import Navbar from "@/components/Navigation/Navbar.vue";
-
+import SeriesBookmarks from "@/components/Bookmarks/Pages/SeriesBookmarks.vue"
 
 export default {
   components: {
-    Navbar
+    Navbar,
+    SeriesBookmarks
   },
   setup(){
   }
