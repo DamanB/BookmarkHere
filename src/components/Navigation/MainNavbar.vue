@@ -13,7 +13,14 @@
         <span id="userDisplayName">{{ user.displayName }}</span>
       </div>
       <div id="user-dropdown-container">
-        <button id="logoutButton" @click="logoutUser">Logout</button>
+        <div class="menu-icon" @click="toggleShowUserMenu">
+          <div v-bind:style="userMenuStyle"></div>
+          <div v-bind:style="userMenuStyle"></div>
+          <div v-bind:style="userMenuStyle"></div>
+        </div>
+        <div id="user-dropdown-content" v-if="showUserMenu">
+          <button id="logoutButton" @click="logoutUser">Logout</button>
+        </div>
       </div>
     </div>
   </div>
@@ -22,6 +29,7 @@
 <script>
 //Dependancies
 import { useRouter } from "vue-router";
+import { ref } from 'vue'
 //Composables
 import getUser from "@/composables/authentication/getUser";
 import userLogout from "@/composables/authentication/userLogout";
@@ -31,9 +39,24 @@ export default {
     const router = useRouter();
     //get user info
     const { user } = getUser();
+    
+    //user menu
+    const showUserMenu = ref(false)
+    const userMenuStyle = ref("margin: 7px 0;")
+    const toggleShowUserMenu = () => {
+      if (showUserMenu.value)
+      {
+        userMenuStyle.value = "margin: 7px 0;"
+      }
+      else
+      {
+        userMenuStyle.value = "margin: 10px 0;"
+      }
+      showUserMenu.value = !showUserMenu.value
+    }
+    
     //Logout button
     const { logout, error } = userLogout();
-
     const logoutUser = async () => {
       await logout(); //log user out
       if (!error.value) {
@@ -45,7 +68,7 @@ export default {
         alert("Something went wrong logging you out");
       }
     };
-    return { user, logoutUser };
+    return { user, showUserMenu, toggleShowUserMenu, userMenuStyle, logoutUser };
   },
 };
 </script>
@@ -114,10 +137,21 @@ export default {
 #userDisplayName {
   font-size: 20px;
   border-bottom: 1px solid white;
+  margin-right: 13px;
 }
 
-#user-dropdown-container {
-  display: none;
+.menu-icon{
+  cursor: pointer;
+}
+
+.menu-icon div {
+  width: 28px;
+  height: 2px;
+  background-color: white;
+  transition-duration: .2s;
+}
+
+#user-dropdown-content {
   position: absolute;
   top: 0;
   right: 0;
@@ -130,10 +164,6 @@ export default {
   border-radius: 0 0 3px 3px;
 
   text-align: center;
-}
-
-#user-container:hover #user-dropdown-container {
-  display: block;
 }
 
 #logoutButton {
