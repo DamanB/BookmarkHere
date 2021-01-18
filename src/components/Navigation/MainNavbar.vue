@@ -18,8 +18,10 @@
           <div v-bind:style="userMenuStyle"></div>
           <div v-bind:style="userMenuStyle"></div>
         </div>
-        <div id="user-dropdown-content" v-if="showUserMenu">
-          <button id="logoutButton" @click="logoutUser">Logout</button>
+        <div id="user-dropdown-content-container" v-if="showUserMenu" @click="toggleShowUserMenu">
+          <div id="user-dropdown-content">
+            <button id="logoutButton" @click="logoutUser">Logout</button>
+          </div>
         </div>
       </div>
     </div>
@@ -150,7 +152,13 @@ export default {
   background-color: white;
   transition-duration: .15s;
 }
-
+#user-dropdown-content-container{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+}
 #user-dropdown-content {
   position: absolute;
   top: 0;

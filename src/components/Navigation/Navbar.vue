@@ -2,7 +2,7 @@
   <nav id="completeNavbar">
       <div><MainNavbar /></div>
       <div id="navbottom"></div>
-      <div><SubNavbar /></div>
+      <div><SubNavbar @switchBookmarkTab="switchBookmarkTab"/></div>
   </nav>
 </template>
 
@@ -16,7 +16,12 @@ export default {
     MainNavbar,
     SubNavbar,
   },
-  setup() {}
+  setup(props, context) {
+      const switchBookmarkTab = () => {
+        context.emit('switchBookmarkTab');
+    } 
+    return { switchBookmarkTab }
+  }
 };
 </script>
 

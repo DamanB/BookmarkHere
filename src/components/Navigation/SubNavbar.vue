@@ -1,9 +1,9 @@
 <template>
   <div id="subNav" v-if="user">
     <ul id="tabs">
-      <li>Series</li>
-      <li>Movies</li>
-      <li>Books</li>
+      <li @click="switchTab('series')">Series</li>
+      <li @click="switchTab('movies')">Movies</li>
+      <li @click="switchTab('books')">Books</li>
     </ul>
   </div>
 </template>
@@ -11,11 +11,18 @@
 <script>
 import getUser from "@/composables/authentication/getUser";
 export default {
-  setup() {
+  setup(props, context) {
     //get user info
     const { user } = getUser();
-    return { user };
-  },
+
+    //switching tabs
+    const switchTab = (tab) => { 
+      console.log("Request to switch to: " + tab)
+      context.emit('switchBookmarkTab');
+    }
+    return { user, switchTab }
+
+  }
 };
 </script>
 
@@ -42,6 +49,6 @@ export default {
 
 #tabs li:hover {
   cursor: pointer;
-  border-bottom: 2px solid black;
+  border-bottom: 2px solid var(--mainColor);
 }
 </style>

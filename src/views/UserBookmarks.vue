@@ -1,5 +1,5 @@
 <template>
-  <Navbar />
+  <Navbar @switchBookmarkTab="switchBookmarkTab"/>
   <SeriesBookmarks />
   
 </template>
@@ -19,6 +19,14 @@ export default {
     SeriesBookmarks
   },
   setup(){
+
+    const switchBookmarkTab = () => {
+      //TODO - The switch
+      console.log("You Called?")
+    } 
+
+    return { switchBookmarkTab }
+
   }
 }
 </script>
