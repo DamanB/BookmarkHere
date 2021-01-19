@@ -1,7 +1,7 @@
 <template>
   <div id="navMain">
     <div id="logo-container" class="left-container">
-      <img src="@/assets/icons/bookmark-white.png" />
+      <img src="@/assets/icons/bookmark-white.png" alt="BookmarkHere's Logo" />
       <span id="navtitle">BookmarkHere!</span>
     </div>
     <div class="center-container">
