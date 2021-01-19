@@ -1,5 +1,5 @@
 # BookmarkHere!
-BookmarkHere! is a web app designed to keep track of your TV shows, movies, and books!
+BookmarkHere! is a Web application designed to keep track of your TV shows, movies, and books!
 Find the deployed version here: https://bookmark-aa50e.web.app/
 
 ## Development Tools
