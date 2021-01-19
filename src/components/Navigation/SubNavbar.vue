@@ -1,26 +1,33 @@
 <template>
   <div id="subNav" v-if="user">
     <ul id="tabs">
-      <li @click="switchTab('series')">Series</li>
-      <li @click="switchTab('movies')">Movies</li>
-      <li @click="switchTab('books')">Books</li>
+      <div v-for="tab in tabs" :key="tab">
+        <li @click="switchTab(tab)">{{ tab }}</li>
+      </div>
     </ul>
   </div>
 </template>
 
 <script>
 import getUser from "@/composables/authentication/getUser";
+import useTabsNavigation from "@/composables/navigation/useTabsNavigation";
+import { ref } from 'vue'
+
 export default {
   setup(props, context) {
     //get user info
-    const { user } = getUser();
+    const { user } = getUser()
+    
+    //get tab info
+    const { getTabs, getActiveTab, setActiveTab } = useTabsNavigation()
+    const { tabs } = getTabs();
 
     //switching tabs
     const switchTab = (tab) => { 
-      console.log("Request to switch to: " + tab)
-      context.emit('switchBookmarkTab');
+      console.log('switching to ' + tab)
+      setActiveTab(tab)
     }
-    return { user, switchTab }
+    return { tabs, user, switchTab }
 
   }
 };

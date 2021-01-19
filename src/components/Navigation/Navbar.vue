@@ -2,7 +2,7 @@
   <nav id="completeNavbar">
       <div><MainNavbar /></div>
       <div id="navbottom"></div>
-      <div><SubNavbar @switchBookmarkTab="switchBookmarkTab"/></div>
+      <div><SubNavbar /></div>
   </nav>
 </template>
 

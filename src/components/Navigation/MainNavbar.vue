@@ -63,7 +63,6 @@ export default {
       await logout(); //log user out
       if (!error.value) {
         //successful logout
-        console.log("User logged out");
         router.push({ name: "Home" });
       } else {
         //error

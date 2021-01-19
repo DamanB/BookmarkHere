@@ -23,7 +23,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 #series-bookmarks-container {
   margin-top: 150px;
   display: flex;
