@@ -23,13 +23,18 @@
         </div>
       </div>
     </div>
+    <div class="bookmark-complete-container" v-if="bookmarkComplete">
+      <span>Done!</span>
+      <div>      
+      </div>
+    </div>
     <div class="bookmark-menu-icon" v-on:click="toggleMenu">
         <span v-bind:style="userMenuStyle">&#8942;</span> 
     </div>
     <div class="bookmark-menu-dropdown-container" v-if="showMenu">
-      <span class="menu-title">Bookmark Settings</span>
-      <div class="menu-options">
-          <div class="bookmarkComplete">
+      <div class="menu-content">
+        <span class="menu-title">Bookmark Settings</span>
+        <div class="menu-bookmarkComplete">
             <label for="bookmarkComplete">Series Completed: </label>
             <input type="checkbox" v-model="bookmarkComplete">
         </div>
@@ -147,19 +152,22 @@ export default {
   align-items: center;
   color: white;
 }
+
+.menu-content{
+ padding-left: 20%;
+  max-width: 80%;
+  display:flex;
+  flex-flow: column wrap;
+  justify-content: flex-start;
+}
 .menu-title{
-  margin: 9% 0 7% 0;
+  padding: 13% 0 8% 0;
   font-size: 200%;
 }
-.menu-options{
-  max-width: 70%;
-  display:flex;
-  flex-direction: column;
-}
-.bookmark-menu-dropdown-container .bookmarkComplete{
+.bookmark-menu-dropdown-container .menu-bookmarkComplete{
     margin: 0 0 7% 0;
 }
-.bookmark-menu-dropdown-container .bookmarkComplete label{
+.bookmark-menu-dropdown-container .menu-bookmarkComplete label{
   font-size: 150%;
 }
 .bookmark-menu-dropdown-container div{
@@ -171,6 +179,28 @@ export default {
   font-size: 120%;
   text-align: left;
   margin-right: 2%;
+}
+
+.bookmark-complete-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+
+  background-color: var(--mainColor);
+  opacity: 0.8;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 99%;
+}
+.bookmark-complete-container span{
+  color: white;
+  font-size: 300%;
+  text-align: center;
+}
+.bookmark-complete-container div{
+  height: 55%;
 }
 
 .container-content{
