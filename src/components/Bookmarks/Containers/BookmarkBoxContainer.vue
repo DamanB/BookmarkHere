@@ -11,8 +11,8 @@
         <label for="seriesTitle"></label>
         <input type="text" class="input-text-field series-title" v-model="seriesTitle" placeholder="Click to add a title" >
         
-        <div class="series-episode-container" v-if="showEpisodeNumber">
-          <div class="episode-number-container">
+        <div class="series-episode-container">
+          <div class="episode-number-container" v-if="showEpisodeNumber">
             <label for="seriesEpisode">Now on Episode: </label>
             <input type="number" min="0" class="input-number-field series-episode-number" v-model="seriesEpisode" v-on:change="fixEpisodeNumber" v-bind:style="episodeNumberStyle" placeholder="">
           </div>
@@ -27,7 +27,21 @@
         <span v-bind:style="userMenuStyle">&#8942;</span> 
     </div>
     <div class="bookmark-menu-dropdown-container" v-if="showMenu">
-
+      <span class="menu-title">Bookmark Settings</span>
+      <div class="menu-options">
+          <div class="bookmarkComplete">
+            <label for="bookmarkComplete">Series Completed: </label>
+            <input type="checkbox" v-model="bookmarkComplete">
+        </div>
+        <div>
+          <label for="showTimestamp">Show Timestamp: </label>
+         <input type="checkbox" v-model="showTimestamp">
+       </div>
+        <div>
+          <label for="showEpisodeNumber">Show Episode Number: </label>
+          <input type="checkbox" v-model="showEpisodeNumber">
+        </div>
+      </div>
     </div>
     <div class="container-bottom"></div>
   </div>
@@ -42,11 +56,12 @@ export default {
     const seriesTitle = ref()
     const seriesEpisode = ref()
     const seriesTimestamp = ref()
+    const bookmarkComplete = ref(false)
 
     const episodeNumberStyle = ref()
     const userMenuStyle = ref()
 
-    const showTimestamp = ref(true)
+    const showTimestamp = ref(false)
     const showEpisodeNumber = ref (true)
     const showMenu = ref(false)
 
@@ -91,7 +106,7 @@ export default {
       }
     }
 
-    return { seriesTitle, seriesEpisode, seriesTimestamp, 
+    return { seriesTitle, seriesEpisode, seriesTimestamp, bookmarkComplete,
     fixEpisodeNumber, episodeNumberStyle, fixEpisodeTimestamp,
     showTimestamp, showEpisodeNumber, toggleMenu, showMenu, userMenuStyle
     }
@@ -113,18 +128,49 @@ export default {
   font-size: 250%;
   content: "\22EE";
   cursor: pointer;
+  transition-duration: .2s;
 }
 
 .bookmark-menu-dropdown-container{
   position: absolute;
   top: 0;
   left: 0;
-  background-color: var(--mainColor);
-  opacity: 0.75;
+  background-color: black;
+  opacity: 0.85;
   width: 100%;
   height: 99%;
   border-radius: 0 0 3px 3px;
   z-index: 1;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: white;
+}
+.menu-title{
+  margin: 9% 0 7% 0;
+  font-size: 200%;
+}
+.menu-options{
+  max-width: 70%;
+  display:flex;
+  flex-direction: column;
+}
+.bookmark-menu-dropdown-container .bookmarkComplete{
+    margin: 0 0 7% 0;
+}
+.bookmark-menu-dropdown-container .bookmarkComplete label{
+  font-size: 150%;
+}
+.bookmark-menu-dropdown-container div{
+  margin: 0 0 5% 0;
+  text-align: left;
+  width: 100%;
+}
+.bookmark-menu-dropdown-container label{
+  font-size: 120%;
+  text-align: left;
+  margin-right: 2%;
 }
 
 .container-content{
