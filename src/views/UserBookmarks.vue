@@ -3,7 +3,6 @@
   <SeriesBookmarks v-if="activeTab == tabs[0]"/>
   <MoviesBookmarks v-if="activeTab == tabs[1]"/>
   <BooksBookmarks v-if="activeTab == tabs[2]"/>
-
 </template>
 
 <script>

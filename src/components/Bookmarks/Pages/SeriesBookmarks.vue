@@ -1,14 +1,14 @@
 <template>
   <div id="series-bookmarks-container">
     <div class="container"><BookmarkBoxContainer /></div>
+    <!-- <div class="container"><BookmarkBoxContainer /></div>
     <div class="container"><BookmarkBoxContainer /></div>
     <div class="container"><BookmarkBoxContainer /></div>
     <div class="container"><BookmarkBoxContainer /></div>
     <div class="container"><BookmarkBoxContainer /></div>
     <div class="container"><BookmarkBoxContainer /></div>
     <div class="container"><BookmarkBoxContainer /></div>
-    <div class="container"><BookmarkBoxContainer /></div>
-    <div class="container"><BookmarkBoxContainer /></div>
+    <div class="container"><BookmarkBoxContainer /></div> -->
   </div>
 </template>
 
