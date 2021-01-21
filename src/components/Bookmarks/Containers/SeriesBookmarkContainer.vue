@@ -142,7 +142,8 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+
 .bookmark-menu-icon{
   position: absolute;
   top: 0;
