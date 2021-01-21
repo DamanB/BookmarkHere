@@ -11,16 +11,22 @@
         <label for="seriesTitle"></label>
         <input type="text" class="input-text-field series-title" v-model="seriesTitle" placeholder="Click to add a title" >
         
+        <div class="series-season-container" v-if="showSeasonNumber">
+          <label for="seriesEpisode">Season: </label>
+          <input type="number" min="0" class="input-number-field series-season-number" v-model="seriesSeason" v-on:change="fixSeasonNumber" placeholder="0">
+        </div>
+
         <div class="series-episode-container">
           <div class="episode-number-container" v-if="showEpisodeNumber">
             <label for="seriesEpisode">Now on Episode: </label>
-            <input type="number" min="0" class="input-number-field series-episode-number" v-model="seriesEpisode" v-on:change="fixEpisodeNumber" v-bind:style="episodeNumberStyle" placeholder="">
+            <input type="number" min="0" class="input-number-field series-episode-number" v-model="seriesEpisode" v-on:change="fixEpisodeNumber" v-bind:style="episodeNumberStyle" placeholder="0">
           </div>
           <div class="series-timestamp-container" v-if="showTimestamp">
             <label for="seriesEpisodeTimestamp">Timestamp: </label>
             <input type="text" class="input-text-field series-episode-timestamp" placeholder="HH:MM:SS" v-on:change="fixEpisodeTimestamp" v-model="seriesTimestamp">
           </div>
         </div>
+
       </div>
     </div>
     <div class="bookmark-complete-container" v-if="bookmarkComplete">
@@ -38,6 +44,10 @@
             <label for="bookmarkComplete">Series Completed: </label>
             <input type="checkbox" v-model="bookmarkComplete">
         </div>
+        <div>
+          <label for="showSeasonNumber">Show Season: </label>
+         <input type="checkbox" v-model="showSeasonNumber">
+       </div>
         <div>
           <label for="showTimestamp">Show Timestamp: </label>
          <input type="checkbox" v-model="showTimestamp">
@@ -59,6 +69,7 @@ export default {
     //standards
     const timestampReg = /^(?:(?:([01]?\d|2[0-3]):)?([0-5]?\d):)?([0-5]?\d)$/
     const seriesTitle = ref()
+    const seriesSeason = ref()
     const seriesEpisode = ref()
     const seriesTimestamp = ref()
     const bookmarkComplete = ref(false)
@@ -68,6 +79,7 @@ export default {
 
     const showTimestamp = ref(false)
     const showEpisodeNumber = ref (true)
+    const showSeasonNumber = ref (true)
     const showMenu = ref(false)
 
     const fixEpisodeNumber = () => {
@@ -75,17 +87,26 @@ export default {
       {
         if (seriesEpisode.value < 0){
           seriesEpisode.value = 0
-          episodeNumberStyle.value = "width: 10%"
+          episodeNumberStyle.value = "width: 15%"
         }
        else
         {
           var length = seriesEpisode.value.toString().length
-          var newSize = (length + 0.6) * 50
+          var newSize = (length + 0.5) * 50
           var style = "width: " + newSize + "px;"
           episodeNumberStyle.value = style
        }
       }else{
-          episodeNumberStyle.value = "width: 10%"
+          episodeNumberStyle.value = "width: 15%"
+      }
+    }
+
+    const fixSeasonNumber = () => {
+      if (seriesSeason.value)
+      {
+        if (seriesSeason.value < 0){
+          seriesSeason.value = 0
+        }
       }
     }
 
@@ -111,9 +132,10 @@ export default {
       }
     }
 
-    return { seriesTitle, seriesEpisode, seriesTimestamp, bookmarkComplete,
-    fixEpisodeNumber, episodeNumberStyle, fixEpisodeTimestamp,
-    showTimestamp, showEpisodeNumber, toggleMenu, showMenu, userMenuStyle
+    return { seriesTitle, seriesSeason, seriesEpisode, seriesTimestamp, bookmarkComplete,
+    fixEpisodeNumber, episodeNumberStyle, fixEpisodeTimestamp, fixSeasonNumber,
+    showTimestamp, showEpisodeNumber, showSeasonNumber,
+    toggleMenu, showMenu, userMenuStyle
     }
   }
 
@@ -260,15 +282,27 @@ export default {
   white-space: nowrap;
   overflow: visible;
 }
+.input-number-field:focus{
+    border-bottom: 1px solid black;
+}
 
 
 .series-title{
   min-width: 96%;
-  font-size: 180%;
+  font-size: 200%;
   margin: 1% 2%;
 }
 .series-title:focus{
     border-bottom: 1px solid black;
+}
+
+.series-season-container{
+  margin: 0 2%;
+  font-size: 130%;
+}
+.series-season-number{
+  width: 12%;
+  font-size: 100%;
 }
 
 .series-episode-container{
@@ -280,13 +314,13 @@ export default {
   margin: 0;
 }
 .series-episode-container label{
-  margin-right: 1%;
+  margin-right: 3%;
   font-size: 100%;
 }
 .series-episode-number{
-  text-align: right;
-  width: 10%;
-  min-width: 10%;
+  text-align: left;
+  width: 15%;
+  min-width: 15%;
   max-width: 50%;
   font-size: 500%;
 }
