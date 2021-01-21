@@ -6,11 +6,9 @@
 
 <script>
 //components
-import BookmarkBoxContainer from "../Containers/BookmarkBoxContainer.vue";
 
 export default {
   components: {
-    BookmarkBoxContainer,
   },
 };
 </script>

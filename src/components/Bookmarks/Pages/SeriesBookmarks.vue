@@ -1,24 +1,24 @@
 <template>
   <div id="series-bookmarks-container">
-    <div class="container"><BookmarkBoxContainer /></div>
-    <!-- <div class="container"><BookmarkBoxContainer /></div>
-    <div class="container"><BookmarkBoxContainer /></div>
-    <div class="container"><BookmarkBoxContainer /></div>
-    <div class="container"><BookmarkBoxContainer /></div>
-    <div class="container"><BookmarkBoxContainer /></div>
-    <div class="container"><BookmarkBoxContainer /></div>
-    <div class="container"><BookmarkBoxContainer /></div>
-    <div class="container"><BookmarkBoxContainer /></div> -->
+    <div class="container"><SeriesBookmarkContainer /></div>
+    <div class="container"><SeriesBookmarkContainer /></div>
+    <div class="container"><SeriesBookmarkContainer /></div>
+    <div class="container"><SeriesBookmarkContainer /></div>
+    <div class="container"><SeriesBookmarkContainer /></div>
+    <div class="container"><SeriesBookmarkContainer /></div>
+    <div class="container"><SeriesBookmarkContainer /></div>
+    <div class="container"><SeriesBookmarkContainer /></div>
+    <div class="container"><SeriesBookmarkContainer /></div>
   </div>
 </template>
 
 <script>
 //components
-import BookmarkBoxContainer from "../Containers/BookmarkBoxContainer.vue";
+import SeriesBookmarkContainer from "../Containers/SeriesBookmarkContainer.vue";
 
 export default {
   components: {
-    BookmarkBoxContainer,
+    SeriesBookmarkContainer,
   },
 };
 </script>
