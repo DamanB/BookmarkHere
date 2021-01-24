@@ -10,6 +10,8 @@
 <script>
 //dependencies
 import { ref } from 'vue'
+//composables
+import getBookmarks from '@/composables/firestore/getBookmarks'
 //components
 import SeriesBookmarkContainer from "../Containers/SeriesBookmarkContainer.vue";
 import AddBookmarkContainer from "../Containers/AddBookmarkContainer.vue";
@@ -20,9 +22,15 @@ export default {
     AddBookmarkContainer,
   },
   setup() {
-
+    //load bookmarks
+    const {bookmarkTypes, load} = getBookmarks()
     const seriesBookmarks = ref([])
+    load(bookmarkTypes.Series).then(bookmarks => {
+      seriesBookmarks.value = bookmarks
+      console.log(seriesBookmarks.value)
+    })
 
+    //add a new bookmark
     const addBookmark = () => {
       const bookmarkId = "bookmark" + (seriesBookmarks.lenght + 1)
       seriesBookmarks.value.push(bookmarkId)
