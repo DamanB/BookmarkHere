@@ -11,11 +11,12 @@ const getBookmarks = () => {
         Books: "BooksBookmarks"
     };    
 
-    const load = async (bookmarkType) => {
+    const load = async (bookmarkType, uid) => {
         try{
-            const response = await projectFirestore.collection(bookmarkType).get()
             let bookmarks = []
-            
+            const collection = projectFirestore.collection(bookmarkType)
+            const response = await collection.where('uid','==',uid).get()
+
             bookmarks = response.docs.map(doc => {
                 return {...doc.data(), bookmarkId: doc.id}
             })

@@ -1,7 +1,7 @@
 <template>
   <div id="series-bookmarks-container">
-      <div class="bookmarks-container" v-for="bookmark in seriesBookmarks" :key="bookmark">
-        <div class="container"><SeriesBookmarkContainer /></div>
+      <div class="bookmarks-container" v-for="bookmark in seriesBookmarks" :key="bookmark.bookmarkID">
+        <div class="container"><SeriesBookmarkContainer :bookmark="bookmark" /></div>
       </div>
        <div class="container"><AddBookmarkContainer @AddBookmark="addBookmark" /></div>
   </div>     
@@ -11,6 +11,7 @@
 //dependencies
 import { ref } from 'vue'
 //composables
+import getUser from '@/composables/authentication/getUser'
 import getBookmarks from '@/composables/firestore/getBookmarks'
 //components
 import SeriesBookmarkContainer from "../Containers/SeriesBookmarkContainer.vue";
@@ -22,12 +23,16 @@ export default {
     AddBookmarkContainer,
   },
   setup() {
+    //getUserdata
+    const { user } = getUser()
+    const uid = user.value.uid
+    console.log(uid)
+
     //load bookmarks
     const {bookmarkTypes, load} = getBookmarks()
     const seriesBookmarks = ref([])
-    load(bookmarkTypes.Series).then(bookmarks => {
+    load(bookmarkTypes.Series, uid).then(bookmarks => {
       seriesBookmarks.value = bookmarks
-      console.log(seriesBookmarks.value)
     })
 
     //add a new bookmark
@@ -36,7 +41,7 @@ export default {
       seriesBookmarks.value.push(bookmarkId)
     };
 
-    return { addBookmark, seriesBookmarks };
+    return { user ,addBookmark, seriesBookmarks };
   },
 };
 </script>

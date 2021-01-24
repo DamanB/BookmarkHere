@@ -1,6 +1,6 @@
 <template>
   <Navbar />
-  <SeriesBookmarks v-if="activeTab == tabs[0]"/>
+  <SeriesBookmarks v-if="activeTab == tabs[0]" />
   <MoviesBookmarks v-if="activeTab == tabs[1]"/>
   <BooksBookmarks v-if="activeTab == tabs[2]"/>
 </template>
@@ -28,8 +28,7 @@ export default {
   setup(){
     const { getTabs, getActiveTab } = useTabsNavigation()
     const { tabs } = getTabs()
-    const { activeTab } = getActiveTab()
-      
+    const { activeTab } = getActiveTab()      
     return { tabs, activeTab}
   }
 }

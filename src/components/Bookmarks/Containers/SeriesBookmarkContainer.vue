@@ -65,21 +65,26 @@
 <script>
 import { ref } from 'vue'
 export default {
-  setup(){
+  props: ['bookmark'],
+  setup(props){
+    const data = props.bookmark
     //standards
     const timestampReg = /^(?:(?:([01]?\d|2[0-3]):)?([0-5]?\d):)?([0-5]?\d)$/
-    const seriesTitle = ref()
-    const seriesSeason = ref()
-    const seriesEpisode = ref()
-    const seriesTimestamp = ref()
-    const bookmarkComplete = ref(false)
+    
+    //data
+    const seriesTitle = ref(data.title)
+    const seriesSeason = ref(data.season)
+    const seriesEpisode = ref(data.episode)
+    const seriesTimestamp = ref(data.timestamp)
+    const seriesImageURL = ref(data.imageURL)
+    const bookmarkComplete = ref(data.completed)
+    const showTimestamp = ref(data.showTimestamp)
+    const showEpisodeNumber = ref (data.showEpisode)
+    const showSeasonNumber = ref (data.showSeason)
 
     const episodeNumberStyle = ref()
     const userMenuStyle = ref()
 
-    const showTimestamp = ref(false)
-    const showEpisodeNumber = ref (true)
-    const showSeasonNumber = ref (true)
     const showMenu = ref(false)
 
     const fixEpisodeNumber = () => {
@@ -132,7 +137,7 @@ export default {
       }
     }
 
-    return { seriesTitle, seriesSeason, seriesEpisode, seriesTimestamp, bookmarkComplete,
+    return { seriesTitle, seriesSeason, seriesEpisode, seriesTimestamp, bookmarkComplete, seriesImageURL,
     fixEpisodeNumber, episodeNumberStyle, fixEpisodeTimestamp, fixSeasonNumber,
     showTimestamp, showEpisodeNumber, showSeasonNumber,
     toggleMenu, showMenu, userMenuStyle
