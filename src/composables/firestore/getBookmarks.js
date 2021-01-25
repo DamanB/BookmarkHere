@@ -5,29 +5,42 @@ import { projectFirestore } from '@/firebase/config'
 const getBookmarks = () => {
     const error = ref(null)
 
-    const bookmarkTypes = {
-        Series: "SeriesBookmarks",
-        Movies: "MoviesBookmarks",
-        Books: "BooksBookmarks"
+    const bookmarks = {
+        Series: ref([]),
+        Movies: ref([]),
+        Books: ref([])
     };    
 
-    const load = async (bookmarkType, uid) => {
+    const getAllBookmarks = () => {
+        return bookmarks
+    }
+
+    const loadAllBookmarks = async (uid) => {
         try{
-            let bookmarks = []
-            const collection = projectFirestore.collection(bookmarkType)
-            const response = await collection.where('uid','==',uid).get()
-
-            bookmarks = response.docs.map(doc => {
-                return {...doc.data(), bookmarkId: doc.id}
-            })
-            return bookmarks
-
+            loadBookmarks("SeriesBookmarks", uid, bookmarks.Series)
+            loadBookmarks("MoviesBookmarks", uid, bookmarks.value.Movies)
+            loadBookmarks("BooksBookmarks", uid, bookmarks.value.Series)
         }catch(err){
             error.value = err.message
         }
     }
-    
-    return {error, bookmarkTypes, load}
+   
+    const loadBookmarks = (collectionName, uid, storage) =>
+    {
+        try{
+            const collection = projectFirestore.collection(collectionName)
+            collection.where('uid','==',uid).orderBy('createdAt','title').onSnapshot((snap) => {
+                storage.value = snap.docs.map(doc => {
+                    return {...doc.data(), bookmarkId: doc.id}
+                })
+            })
+        }catch(err){
+            error.value = err.message
+        }
+    }
+
+
+    return {error, getAllBookmarks, loadAllBookmarks}
 }
 
 export default getBookmarks

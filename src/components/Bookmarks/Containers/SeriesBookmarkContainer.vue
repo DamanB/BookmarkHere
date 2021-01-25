@@ -84,7 +84,6 @@ export default {
 
     const episodeNumberStyle = ref()
     const userMenuStyle = ref()
-
     const showMenu = ref(false)
 
     const fixEpisodeNumber = () => {
