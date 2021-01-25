@@ -1,9 +1,9 @@
 <template>
   <Navbar />
   <div v-if="bookmarks">
-    <SeriesBookmarks :bookmarks="bookmarks.Series" v-if="activeTab == tabs[0]" />
-    <MoviesBookmarks :bookmarks="bookmarks.Movies" v-if="activeTab == tabs[1]"/>
-    <BooksBookmarks :bookmarks="bookmarks.Books" v-if="activeTab == tabs[2]"/>
+    <SeriesBookmarks :bookmarks="bookmarks.Series" :uid="uid" v-if="activeTab == tabs[0]" />
+    <MoviesBookmarks :bookmarks="bookmarks.Movies" :uid="uid" v-if="activeTab == tabs[1]"/>
+    <BooksBookmarks :bookmarks="bookmarks.Books" :uid="uid" v-if="activeTab == tabs[2]"/>
   </div>
 </template>
 
@@ -31,12 +31,12 @@ export default {
   setup(){
     //Get info on user for DB query
     const { user } = getUser()
-    const uid = user.value.uid
+    const uid = ref(user.value.uid)
     //store bookmarks
     const {error, getAllBookmarks, loadAllBookmarks} = getBookmarks();
     const bookmarks = getAllBookmarks()
     //load bookmarks from database
-    loadAllBookmarks(uid).then(() => {
+    loadAllBookmarks(uid.value).then(() => {
       bookmarks.value = getAllBookmarks()
     })
 
@@ -44,7 +44,7 @@ export default {
     const { getTabs, getActiveTab } = useTabsNavigation()
     const { tabs } = getTabs()
     const { activeTab } = getActiveTab()      
-    return { tabs, activeTab, bookmarks }
+    return { tabs, activeTab, bookmarks, uid }
   }
 }
 

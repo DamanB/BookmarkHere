@@ -29,7 +29,11 @@ const getBookmarks = () => {
     {
         try{
             const collection = projectFirestore.collection(collectionName)
-            collection.where('uid','==',uid).orderBy('createdAt','title').onSnapshot((snap) => {
+            // const response = await collection.where('uid','==',uid).orderBy('createdAt').get()
+            // storage.value = response.docs.map(doc => {
+            //     return {...doc.data(), bookmarkId: doc.id}
+            // })
+            const res = collection.where('uid','==',uid).orderBy('createdAt', "desc").onSnapshot((snap) => {
                 storage.value = snap.docs.map(doc => {
                     return {...doc.data(), bookmarkId: doc.id}
                 })

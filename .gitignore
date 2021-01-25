@@ -30,3 +30,5 @@ public/index.html
 .firebaserc
 firebase.json
 .firebase/hosting.ZGlzdA.cache
+ui-debug.log
+firestore-debug.log
