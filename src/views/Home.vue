@@ -41,7 +41,7 @@ export default {
 <style scoped>
 #intro{
     position: relative;
-    margin: 7% 0 2% 0;
+    margin: 1% 0 1% 0;
     padding: 5% 1%; 
     text-align: center;
     background-color: white;

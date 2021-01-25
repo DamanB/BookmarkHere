@@ -1,4 +1,7 @@
 <template>
+  <div class="header-container">
+      <h1>Your Bookmarks</h1>
+  </div>
   <div id="series-bookmarks-container">
       <div class="bookmarks-container" v-for="bookmark in bookmarks" :key="bookmark.bookmarkID">
         <div class="container"><SeriesBookmarkContainer :bookmark="bookmark" /></div>
@@ -40,7 +43,6 @@ export default {
 
 <style scoped>
 #series-bookmarks-container {
-  margin-top: 150px;
   display: flex;
   justify-content: space-evenly;
   flex-flow: row wrap;
