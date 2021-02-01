@@ -35,7 +35,8 @@ export default {
 
     //add a new bookmark
     const addBookmark = async () => {
-      await addSeriesBookmark(uid)
+      var newBookmark = await addSeriesBookmark(uid)
+      bookmarks.value.push(newBookmark)
     };
 
     return { addBookmark, bookmarks };

@@ -21,7 +21,7 @@ const addSeriesBookmark = async (uid) => {
     const response = await projectFirestore.collection('SeriesBookmarks').add(newBookmark).then((docRef) => {
         bookmarkId = docRef.id
     })
-    return {...newbookmark, bookmarkId }
+    return {...newBookmark, bookmarkId }
 }
 
 const useAddBookmark = () => {
