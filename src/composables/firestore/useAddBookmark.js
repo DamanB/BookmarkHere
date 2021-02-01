@@ -17,7 +17,11 @@ const addSeriesBookmark = async (uid) => {
         showSeason: true,
         createdAt: firebase.firestore.Timestamp.now()
     }
-    const response = await projectFirestore.collection('SeriesBookmarks').add(newBookmark)
+    var bookmarkId;
+    const response = await projectFirestore.collection('SeriesBookmarks').add(newBookmark).then((docRef) => {
+        bookmarkId = docRef.id
+    })
+    return {...newbookmark, bookmarkId }
 }
 
 const useAddBookmark = () => {

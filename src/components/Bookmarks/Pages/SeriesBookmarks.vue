@@ -11,7 +11,7 @@
 
 <script>
 //dependencies
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 //composables
 import getUser from '@/composables/authentication/getUser'
 import useAddBookmark from '@/composables/firestore/useAddBookmark'

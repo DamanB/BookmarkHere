@@ -9,7 +9,7 @@
 
 <script>
 //Dependencies
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 //composables
 import getUser from "@/composables/authentication/getUser";
 import useTabsNavigation from "@/composables/navigation/useTabsNavigation";
@@ -32,21 +32,23 @@ export default {
     //Get info on user for DB query
     const { user } = getUser()
     const uid = ref(user.value.uid)
-    //store bookmarks
-    const {error, getAllBookmarks, loadAllBookmarks} = getBookmarks();
-    const bookmarks = getAllBookmarks()
-    //load bookmarks from database
-    loadAllBookmarks(uid.value).then(() => {
-      bookmarks.value = getAllBookmarks()
-    })
 
+    const {getAllBookmarks, loadAllBookmarks} = getBookmarks();
+    //get BM
+    loadAllBookmarks(uid.value)
+    //store bookmarks
+    const bookmarks = getAllBookmarks()
+    
     //for knowing which bookmarks to show
     const { getTabs, getActiveTab } = useTabsNavigation()
     const { tabs } = getTabs()
-    const { activeTab } = getActiveTab()      
+    const { activeTab } = getActiveTab()
+    
     return { tabs, activeTab, bookmarks, uid }
   }
 }
+
+
 
 </script>
 

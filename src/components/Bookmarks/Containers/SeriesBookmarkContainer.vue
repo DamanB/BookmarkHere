@@ -1,39 +1,51 @@
 <template>
   <div class="box-container">
     <div class="container-content">
-      <div class="container-image">
-        <img src="@/assets/img/default_bookmark_image.jpg" alt="">
-        <div class="image-overlay">
 
+      <div class="container-image">
+        <div v-if="seriesImageURL">
+          <img :src="seriesImageURL" alt="">
         </div>
+        <div v-else>
+          <img :src="defaultImage" alt="">
+        </div>
+        <div class="image-overlay">
+          <div class="change-image-button" v-on:click="toggleChangeImageMenu">
+            <span>Change Image</span>
+          </div>
+        </div>
+  
       </div>
+
       <div class="container-information">
         <label for="seriesTitle"></label>
-        <input type="text" class="input-text-field series-title" v-model="seriesTitle" placeholder="Click to add a title" >
+        <input type="text" class="input-text-field series-title" v-model="seriesTitle" v-on:change="updateTitle" placeholder="Click to add a title" >
         
         <div class="series-season-container" v-if="showSeasonNumber">
           <label for="seriesEpisode">Season: </label>
-          <input type="number" min="0" class="input-number-field series-season-number" v-model="seriesSeason" v-on:change="fixSeasonNumber" placeholder="0">
+          <input type="number" min="0" class="input-number-field series-season-number" v-model="seriesSeason" v-on:change="updateSeason" placeholder="0">
         </div>
 
         <div class="series-episode-container">
           <div class="episode-number-container" v-if="showEpisodeNumber">
             <label for="seriesEpisode">Now on Episode: </label>
-            <input type="number" min="0" class="input-number-field series-episode-number" v-model="seriesEpisode" v-on:change="fixEpisodeNumber" v-bind:style="episodeNumberStyle" placeholder="0">
+            <input type="number" min="0" class="input-number-field series-episode-number" v-model="seriesEpisode" v-on:change="updateEpisode" v-bind:style="episodeNumberStyle" placeholder="0">
           </div>
           <div class="series-timestamp-container" v-if="showTimestamp">
             <label for="seriesEpisodeTimestamp">Timestamp: </label>
-            <input type="text" class="input-text-field series-episode-timestamp" placeholder="HH:MM:SS" v-on:change="fixEpisodeTimestamp" v-model="seriesTimestamp">
+            <input type="text" class="input-text-field series-episode-timestamp" placeholder="HH:MM:SS" v-on:change="updateTimestamp" v-model="seriesTimestamp">
           </div>
         </div>
 
       </div>
     </div>
+
     <div class="bookmark-complete-container" v-if="bookmarkComplete">
-      <span>Done!</span>
+      <span><i>~~ Fin ~~</i></span>
       <div>      
       </div>
     </div>
+
     <div class="bookmark-menu-icon" v-on:click="toggleMenu">
         <span v-bind:style="userMenuStyle">&#8942;</span> 
     </div>
@@ -42,51 +54,143 @@
         <span class="menu-title">Bookmark Settings</span>
         <div class="menu-bookmarkComplete">
             <label for="bookmarkComplete">Series Completed: </label>
-            <input type="checkbox" v-model="bookmarkComplete">
+            <input type="checkbox" v-model="bookmarkComplete" v-on:change="updateCompleted">
         </div>
         <div>
           <label for="showSeasonNumber">Show Season: </label>
-         <input type="checkbox" v-model="showSeasonNumber">
+         <input type="checkbox" v-model="showSeasonNumber" v-on:change="updateConfig">
        </div>
         <div>
           <label for="showTimestamp">Show Timestamp: </label>
-         <input type="checkbox" v-model="showTimestamp">
+         <input type="checkbox" v-model="showTimestamp" v-on:change="updateConfig">
        </div>
         <div>
           <label for="showEpisodeNumber">Show Episode Number: </label>
-          <input type="checkbox" v-model="showEpisodeNumber">
+          <input type="checkbox" v-model="showEpisodeNumber" v-on:change="updateConfig">
         </div>
       </div>
     </div>
+
+    <div class="change-image-menu" v-if="showChangeImageMenu">
+      <span id="change-image-title">Set Bookmark Image</span>
+      <span id="change-image-insn">
+        Provide an Image URL ending with an image extension (I.e. .jpg .png etc.)
+      </span>
+      <div id="change-image-input-container">
+        <label for="imagheURL">Image URL: </label>
+        <input type="url" id="imageURLInput" placeholder="I.e. https://i.imgur.com/xyz.jpg" v-model="seriesImageURL">
+        <span id="change-image-insn">
+          (Tip: Right click an image and copy its image location)
+        </span>
+      </div>
+      <div id="change-image-buttons">
+        <div>
+          <button v-on:click="resetImage">Reset</button>  
+          <button v-on:click="setImage"> Change </button>
+        </div>
+          <button v-on:click="toggleChangeImageMenu">Close</button>
+      </div>
+    </div>
     <div class="container-bottom"></div>
+
   </div>
 </template>
 
 <script>
 import { ref } from 'vue'
+import getBookmarkCollections  from '@/composables/firestore/getBookmarkCollections'
+import useModifyBookmarks  from '@/composables/firestore/modifyCommands/useModifyBookmark'
+import useModifySeriesBookmark from '@/composables/firestore/modifyCommands/useModifySeriesBookmark'
+
+
 export default {
   props: ['bookmark'],
   setup(props){
-    const data = props.bookmark
+    //props
     //standards
     const timestampReg = /^(?:(?:([01]?\d|2[0-3]):)?([0-5]?\d):)?([0-5]?\d)$/
-    
-    //data
-    const seriesTitle = ref(data.title)
-    const seriesSeason = ref(data.season)
-    const seriesEpisode = ref(data.episode)
-    const seriesTimestamp = ref(data.timestamp)
-    const seriesImageURL = ref(data.imageURL)
-    const bookmarkComplete = ref(data.completed)
-    const showTimestamp = ref(data.showTimestamp)
-    const showEpisodeNumber = ref (data.showEpisode)
-    const showSeasonNumber = ref (data.showSeason)
+    const defaultImage = ref(require('@/assets/img/default_bookmark_image.jpg'))
+    //composables
+    const { getCollections } = getBookmarkCollections()
+    const { modifyTitle, modifyCompleted, modifyImageURL, resetImageURL } = useModifyBookmarks()    
+    const { modifyPlaceholder, modifyConfig } = useModifySeriesBookmark()
 
+    //bookmark data
+    const seriesTitle = ref(null)
+    const seriesSeason = ref(null)
+    const seriesEpisode = ref(null)
+    const seriesTimestamp = ref(null)
+    const seriesImageURL = ref(null)
+    const bookmarkComplete = ref(null)
+    const showTimestamp = ref(null)
+    const showEpisodeNumber = ref (null)
+    const showSeasonNumber = ref (null)
+    const bookmarkId = props.bookmark.bookmarkId
+    const updateData = () => {
+      seriesTitle.value = props.bookmark.title
+      seriesSeason.value = props.bookmark.season
+      seriesEpisode.value = props.bookmark.episode
+      seriesTimestamp.value = props.bookmark.timestamp
+      seriesImageURL.value = props.bookmark.imageURL
+      bookmarkComplete.value = props.bookmark.completed
+      showTimestamp.value = props.bookmark.showTimestamp
+      showEpisodeNumber.value = props.bookmark.showEpisode
+      showSeasonNumber.value = props.bookmark.showSeason
+    }
+    updateData()
+
+    //state holders for bookmark
     const episodeNumberStyle = ref()
     const userMenuStyle = ref()
     const showMenu = ref(false)
+    const showChangeImageMenu = ref(false)
 
-    const fixEpisodeNumber = () => {
+    //Menu togglers
+    const toggleMenu = () => {
+      showMenu.value = !showMenu.value
+      if (showMenu.value)
+      {
+        userMenuStyle.value = "font-size: 300%;"
+      }
+      else
+      {
+        userMenuStyle.value = "font-size: 250%;"
+      }
+    }
+
+    const toggleChangeImageMenu = () => {
+      showChangeImageMenu.value = !showChangeImageMenu.value
+    }
+
+    //Generic data updaters
+    const updateTitle = async () => {
+      await modifyTitle(getCollections().series, bookmarkId, seriesTitle.value)
+    }
+
+    const updateCompleted = async () => {
+      await modifyCompleted(getCollections().series, bookmarkId, bookmarkComplete.value)
+    }
+
+    const resetImage = async () => {
+      await resetImageURL(getCollections().series, bookmarkId)
+    }
+ 
+    const setImage = async () => { 
+      await modifyImageURL(getCollections().series, bookmarkId, seriesImageURL.value)
+    }
+
+    //series specific data updaters
+    const updateSeason = async () => {
+      if (seriesSeason.value)
+      {
+        if (seriesSeason.value < 0){
+          seriesSeason.value = 0
+        }
+      }
+      await modifyPlaceholder(bookmarkId, seriesSeason.value, seriesEpisode.value, seriesTimestamp.value)
+    }
+
+    const updateEpisode = async () => {
       if (seriesEpisode.value)
       {
         if (seriesEpisode.value < 0){
@@ -103,18 +207,10 @@ export default {
       }else{
           episodeNumberStyle.value = "width: 15%"
       }
+      await modifyPlaceholder(bookmarkId, seriesSeason.value, seriesEpisode.value, seriesTimestamp.value)
     }
 
-    const fixSeasonNumber = () => {
-      if (seriesSeason.value)
-      {
-        if (seriesSeason.value < 0){
-          seriesSeason.value = 0
-        }
-      }
-    }
-
-    const fixEpisodeTimestamp = () => {
+    const updateTimestamp = async () => {
       if (seriesTimestamp.value)
       {
         if (!timestampReg.test(seriesTimestamp.value))
@@ -122,25 +218,26 @@ export default {
           seriesTimestamp.value = ""
         }
       }
+      await modifyPlaceholder(bookmarkId, seriesSeason.value, seriesEpisode.value, seriesTimestamp.value)
     }
 
-    const toggleMenu = () => {
-      showMenu.value = !showMenu.value
-      if (showMenu.value)
-      {
-        userMenuStyle.value = "font-size: 300%;"
-      }
-      else
-      {
-        userMenuStyle.value = "font-size: 250%;"
-      }
+    const updateConfig = async () => {
+      await modifyConfig(bookmarkId, showSeasonNumber.value, showEpisodeNumber.value, showTimestamp.value)
     }
 
-    return { seriesTitle, seriesSeason, seriesEpisode, seriesTimestamp, bookmarkComplete, seriesImageURL,
-    fixEpisodeNumber, episodeNumberStyle, fixEpisodeTimestamp, fixSeasonNumber,
-    showTimestamp, showEpisodeNumber, showSeasonNumber,
-    toggleMenu, showMenu, userMenuStyle
+    return { 
+    //data
+    seriesTitle, seriesSeason, seriesEpisode, seriesTimestamp, bookmarkComplete, seriesImageURL,
+    defaultImage, showTimestamp, showEpisodeNumber, showSeasonNumber,
+    //states
+    toggleMenu, showMenu, userMenuStyle, showChangeImageMenu, toggleChangeImageMenu, episodeNumberStyle,
+    //updaters GENERIC
+    updateTitle, updateCompleted, resetImage, setImage,
+    //updaters SERIES
+    updateEpisode, updateSeason, updateTimestamp, updateConfig
     }
+
+
   }
 
 };
@@ -160,7 +257,7 @@ export default {
   font-size: 250%;
   content: "\22EE";
   cursor: pointer;
-  transition-duration: .2s;
+  transition-duration: .1s;
 }
 
 .bookmark-menu-dropdown-container{
@@ -213,8 +310,7 @@ export default {
   flex-direction: column;
   justify-content: flex-end;
 
-  background-color: var(--mainColor);
-  opacity: 0.8;
+  background-color: rgba(59, 83, 67, 0.4);
   position: absolute;
   top: 0;
   left: 0;
@@ -223,7 +319,7 @@ export default {
 }
 .bookmark-complete-container span{
   color: white;
-  font-size: 300%;
+  font-size: 225%;
   text-align: center;
 }
 .bookmark-complete-container div{
@@ -234,14 +330,14 @@ export default {
   width: 100%;
   height: 100%;
   font-size: 16px;
-  color: var(--mainColor);
+  color: black;
 }
 .container-image{
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
-  min-height: 45%;
+  min-height: 50%;
   overflow:hidden
 }
 .container-image img{
@@ -259,16 +355,88 @@ export default {
   min-height: 100%;
   background-color: rgb(0, 0, 0);
   opacity: 0.1;
+  /* for button */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .image-overlay:hover{
   opacity: 0.5;
 }
+.image-overlay:hover .change-image-button{
+  display: block;
+}
+.change-image-button{
+  display: none;
+  text-align: center;
+  width: 20%;
+  height: 20%;
+  color: white;
+  cursor: pointer;
+}
+.change-image-menu{
+    z-index: 3;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: black;
+    opacity: 0.88;
+
+    padding: 0 3%;
+    width: 94%;
+    height: 99%;
+    border-radius: 0 0 3px 3px;
+
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: white;
+}
+#change-image-title{
+  margin: 5% 0;
+  font-size: 170%;
+}
+#change-image-insn{
+  margin-bottom: 3%;
+  font-style: italic;
+  font-size: 95%;
+}
+#change-image-input-container{
+  width: 90%;
+}
+#change-image-input-container label{
+  float: left;
+  font-style: italic;
+  font-size: 100%;
+}
+#change-image-input-container span{
+  font-size: 90%;
+  float: left;
+  font-style: italic;
+}
+#change-image-input-container input{
+    font-size: 100%;
+    width: 99%;
+}
+#change-image-buttons{
+  width: 90%;
+}
+#change-image-buttons div{
+  margin-bottom: 5%;
+}
+#change-image-buttons button{
+  margin: 0 1%;
+}
+
+
+
 .container-information{
   position: absolute;
-  top: 45%;
+  top: 50%;
   left: 0;
   width: 100%;
-  min-height: 54%;
+  min-height: 49%;
   overflow: hidden;
 }
 
