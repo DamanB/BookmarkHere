@@ -78,7 +78,7 @@
       </span>
       <div id="change-image-input-container">
         <label for="imagheURL">Image URL: </label>
-        <input type="url" id="imageURLInput" placeholder="I.e. https://i.imgur.com/xyz.jpg" v-model="seriesImageURL">
+        <input type="url" id="imageURLInput" placeholder="I.e. https://i.imgur.com/xyz.jpg" v-model="newSeriesImageURL">
         <span id="change-image-insn">
           (Tip: Right click an image and copy its image location)
         </span>
@@ -144,6 +144,7 @@ export default {
     const userMenuStyle = ref()
     const showMenu = ref(false)
     const showChangeImageMenu = ref(false)
+    const newSeriesImageURL = ref(null)
 
     //Menu togglers
     const toggleMenu = () => {
@@ -172,11 +173,13 @@ export default {
     }
 
     const resetImage = async () => {
+      seriesImageURL.value = null
       await resetImageURL(getCollections().series, bookmarkId)
     }
  
     const setImage = async () => { 
-      await modifyImageURL(getCollections().series, bookmarkId, seriesImageURL.value)
+      seriesImageURL.value = newSeriesImageURL.value
+      await modifyImageURL(getCollections().series, bookmarkId, newSeriesImageURL.value)
     }
 
     //series specific data updaters
@@ -230,7 +233,7 @@ export default {
     seriesTitle, seriesSeason, seriesEpisode, seriesTimestamp, bookmarkComplete, seriesImageURL,
     defaultImage, showTimestamp, showEpisodeNumber, showSeasonNumber,
     //states
-    toggleMenu, showMenu, userMenuStyle, showChangeImageMenu, toggleChangeImageMenu, episodeNumberStyle,
+    toggleMenu, showMenu, userMenuStyle, showChangeImageMenu, toggleChangeImageMenu, episodeNumberStyle, newSeriesImageURL,
     //updaters GENERIC
     updateTitle, updateCompleted, resetImage, setImage,
     //updaters SERIES
