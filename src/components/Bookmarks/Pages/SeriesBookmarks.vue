@@ -5,7 +5,9 @@
       <div class="bookmarks-container" v-for="bookmark in bookmarks" :key="bookmark.bookmarkId">
         <div class="container"><SeriesBookmarkContainer :bookmark="bookmark" /></div>
       </div>
-       <div class="container"><AddBookmarkContainer @AddBookmark="addBookmark" /></div>
+      <div class="bookmarks-container">
+         <div class="container"><AddBookmarkContainer @AddBookmark="addBookmark" /></div>
+      </div>
   </div>     
 </template>
 
@@ -46,9 +48,14 @@ export default {
 
 <style scoped>
 #series-bookmarks-container {
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+}
+
+.bookmarks-container {
   display: flex;
-  justify-content: space-evenly;
-  flex-flow: row wrap;
+  justify-content: center;
+  align-items: center;
 }
 
 .container {
