@@ -41,7 +41,7 @@
     </div>
 
     <div class="bookmark-complete-container" v-if="bookmarkComplete">
-      <span><i>~~ Fin ~~</i></span>
+      <span><i>~ Fin ~</i></span>
       <div>      
       </div>
     </div>
@@ -319,7 +319,7 @@ export default {
   flex-direction: column;
   justify-content: flex-end;
 
-  background-color: rgba(59, 83, 67, 0.4);
+  background-color: rgba(0, 0, 0, 0.7);;
   position: absolute;
   top: 0;
   left: 0;
