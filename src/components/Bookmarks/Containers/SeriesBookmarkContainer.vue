@@ -68,6 +68,7 @@
           <label for="showEpisodeNumber">Show Episode Number: </label>
           <input type="checkbox" v-model="showEpisodeNumber" v-on:change="updateConfig">
         </div>
+        <div class="trashbin-icon"><TrashbinButton theme='light' @clicked="deleteThisBookmark" /></div>
       </div>
     </div>
 
@@ -102,17 +103,22 @@ import getBookmarkCollections  from '@/composables/firestore/getBookmarkCollecti
 import useModifyBookmarks  from '@/composables/firestore/modifyCommands/useModifyBookmark'
 import useModifySeriesBookmark from '@/composables/firestore/modifyCommands/useModifySeriesBookmark'
 
+//componenets
+import TrashbinButton from '@/components/icons/Trashbin_Interactive.vue'
 
 export default {
+  components: {
+    TrashbinButton
+  },
   props: ['bookmark'],
-  setup(props){
+  setup(props, context){
     //props
     //standards
     const timestampReg = /^(?:(?:([01]?\d|2[0-3]):)?([0-5]?\d):)?([0-5]?\d)$/
     const defaultImage = ref(require('@/assets/img/default_bookmark_image.jpg'))
     //composables
     const { getCollections } = getBookmarkCollections()
-    const { modifyTitle, modifyCompleted, modifyImageURL, resetImageURL } = useModifyBookmarks()    
+    const { modifyTitle, modifyCompleted, modifyImageURL, resetImageURL, deleteBookmark } = useModifyBookmarks()    
     const { modifyPlaceholder, modifyConfig } = useModifySeriesBookmark()
 
     //bookmark data
@@ -234,6 +240,15 @@ export default {
       await modifyConfig(bookmarkId, showSeasonNumber.value, showEpisodeNumber.value, showTimestamp.value)
     }
 
+    const deleteThisBookmark = async () => {
+      var confirmed = confirm("Delete this bookmark?")
+      if (confirmed)
+      {
+        context.emit('delete')
+        deleteBookmark(getCollections().series, bookmarkId)
+      }
+    }
+
     return { 
     //data
     seriesTitle, seriesSeason, seriesEpisode, seriesTimestamp, bookmarkComplete, seriesImageURL,
@@ -241,7 +256,7 @@ export default {
     //states
     toggleMenu, showMenu, userMenuStyle, showChangeImageMenu, toggleChangeImageMenu, episodeNumberStyle, newSeriesImageURL,
     //updaters GENERIC
-    updateTitle, updateCompleted, resetImage, setImage,
+    updateTitle, updateCompleted, resetImage, setImage, deleteThisBookmark,
     //updaters SERIES
     updateEpisode, updateSeason, updateTimestamp, updateConfig
     }
@@ -273,8 +288,7 @@ export default {
   position: absolute;
   top: 0;
   left: 0;
-  background-color: black;
-  opacity: 0.85;
+  background-color: rgba(0,0,0,0.85);
   width: 100%;
   height: 99%;
   border-radius: 0 0 3px 3px;
@@ -312,6 +326,11 @@ export default {
   font-size: 120%;
   text-align: left;
   margin-right: 2%;
+}
+.bookmark-menu-dropdown-container .trashbin-icon{
+  width: 40px; 
+  height: 50px;
+  align-self: center;
 }
 
 .bookmark-complete-container{

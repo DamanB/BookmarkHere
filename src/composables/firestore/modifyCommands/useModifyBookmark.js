@@ -39,9 +39,13 @@ const useModifyBookmark = () => {
         await _changeImageURL(collection, bookmarkId, "")
     }
 
+    //delete bookmark
+    const deleteBookmark = async (collection, bookmarkId) => {
+        await projectFirestore.collection(collection).doc(bookmarkId).delete()
+    }
 
     return { 
-        modifyTitle, modifyCompleted, modifyImageURL, resetImageURL 
+        modifyTitle, modifyCompleted, modifyImageURL, resetImageURL, deleteBookmark 
     }
 
 

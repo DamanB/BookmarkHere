@@ -1,19 +1,16 @@
 <template>
   <Navbar />
-  <div v-if="bookmarks">
-    <SeriesBookmarks :bookmarks="bookmarks.Series" :uid="uid" v-if="activeTab == tabs[0]" />
-    <MoviesBookmarks :bookmarks="bookmarks.Movies" :uid="uid" v-if="activeTab == tabs[1]"/>
-    <BooksBookmarks :bookmarks="bookmarks.Books" :uid="uid" v-if="activeTab == tabs[2]"/>
+  <div>
+    <SeriesBookmarks v-if="activeTab == tabs[0]" />
+    <MoviesBookmarks v-if="activeTab == tabs[1]"/>
+    <BooksBookmarks v-if="activeTab == tabs[2]"/>
   </div>
 </template>
 
 <script>
 //Dependencies
-import { ref, watch } from 'vue'
 //composables
-import getUser from "@/composables/authentication/getUser";
 import useTabsNavigation from "@/composables/navigation/useTabsNavigation";
-import getBookmarks from '@/composables/firestore/getBookmarks'
 
 //Components
 import Navbar from "@/components/Navigation/Navbar.vue";
@@ -29,22 +26,13 @@ export default {
     BooksBookmarks
   },
   setup(){
-    //Get info on user for DB query
-    const { user } = getUser()
-    const uid = ref(user.value.uid)
-
-    const {getAllBookmarks, loadAllBookmarks} = getBookmarks();
-    //get BM
-    loadAllBookmarks(uid.value)
-    //store bookmarks
-    const bookmarks = getAllBookmarks()
     
     //for knowing which bookmarks to show
     const { getTabs, getActiveTab } = useTabsNavigation()
     const { tabs } = getTabs()
     const { activeTab } = getActiveTab()
     
-    return { tabs, activeTab, bookmarks, uid }
+    return { tabs, activeTab }
   }
 }
 

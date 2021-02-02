@@ -5,18 +5,18 @@ import { projectFirestore } from '@/firebase/config'
 const getBookmarks = () => {
 
     const bookmarks = {
-        Series: ref([]),
-        Movies: ref([]),
-        Books: ref([])
+        series: ref([]),
+        movies: ref([]),
+        books: ref([])
     };    
 
     const getAllBookmarks = () => {
         return bookmarks
     }
 
-    const loadAllBookmarks = async (uid) => {
+    const loadSeriesBookmarks = async (uid) => {
         try{
-            await loadBookmarks("SeriesBookmarks", uid, bookmarks.Series)
+            await loadBookmarks("SeriesBookmarks", uid, bookmarks.series)
             //loadBookmarks("MoviesBookmarks", uid, bookmarks.Movies)
             //loadBookmarks("BooksBookmarks", uid, bookmarks.Books)
         }catch(err){
@@ -40,7 +40,7 @@ const getBookmarks = () => {
     }
 
 
-    return {getAllBookmarks, loadAllBookmarks}
+    return {getAllBookmarks, loadSeriesBookmarks}
 }
 
 export default getBookmarks

@@ -3,7 +3,7 @@
   </div>
   <div id="series-bookmarks-container">
       <div class="bookmarks-container" v-for="bookmark in bookmarks" :key="bookmark.bookmarkId">
-        <div class="container"><SeriesBookmarkContainer :bookmark="bookmark" /></div>
+        <div class="container"><SeriesBookmarkContainer :bookmark="bookmark" @delete="reload" /></div>
       </div>
       <div class="bookmarks-container">
          <div class="container"><AddBookmarkContainer @AddBookmark="addBookmark" /></div>
@@ -13,10 +13,12 @@
 
 <script>
 //dependencies
-import { ref, watch } from 'vue'
+import { ref } from 'vue'
 //composables
 import getUser from '@/composables/authentication/getUser'
+import getBookmarks from '@/composables/firestore/getBookmarks'
 import useAddBookmark from '@/composables/firestore/useAddBookmark'
+
 //components
 import SeriesBookmarkContainer from "../Containers/SeriesBookmarkContainer.vue";
 import AddBookmarkContainer from "../Containers/AddBookmarkContainer.vue";
@@ -26,14 +28,16 @@ export default {
     SeriesBookmarkContainer,
     AddBookmarkContainer,
   },
-  props: ['bookmarks', 'uid'],
-  setup(props) {
+  setup() {
     //setup composables
-    const { addSeriesBookmark } = useAddBookmark()
+    const { addSeriesBookmark } = useAddBookmark()    
+    const { getAllBookmarks, loadSeriesBookmarks} = getBookmarks();
+    const { user } = getUser()
+
     //get user info
-    const uid = props.uid
-    //getBookmarks
-    const bookmarks = props.bookmarks
+    const uid = user.value.uid
+    loadSeriesBookmarks(uid)
+    const bookmarks = getAllBookmarks().series
 
     //add a new bookmark
     const addBookmark = async () => {
@@ -41,7 +45,11 @@ export default {
       bookmarks.value.push(newBookmark)
     };
 
-    return { addBookmark, bookmarks };
+    const reload = async () => {
+      loadSeriesBookmarks(uid)
+    }
+
+    return { addBookmark, bookmarks, reload };
   },
 };
 </script>
