@@ -126,6 +126,33 @@ export default {
     const showEpisodeNumber = ref (null)
     const showSeasonNumber = ref (null)
     const bookmarkId = props.bookmark.bookmarkId
+
+    //state holders for bookmark
+    const episodeNumberStyle = ref()
+    const userMenuStyle = ref()
+    const showMenu = ref(false)
+    const showChangeImageMenu = ref(false)
+    const newSeriesImageURL = ref(null)
+
+    //Methods
+    const updateEpisodeStyle = () => {
+      if (seriesEpisode.value){
+        if (seriesEpisode.value < 0){
+          seriesEpisode.value = 0
+          episodeNumberStyle.value = "width: 15%"
+        }
+       else
+        {
+          var length = seriesEpisode.value.toString().length
+          var newSize = (length + 0.5) * 50
+          var style = "width: " + newSize + "px;"
+          episodeNumberStyle.value = style
+       }
+      }else{
+          episodeNumberStyle.value = "width: 15%"
+      }
+    }
+
     const updateData = () => {
       seriesTitle.value = props.bookmark.title
       seriesSeason.value = props.bookmark.season
@@ -135,16 +162,10 @@ export default {
       bookmarkComplete.value = props.bookmark.completed
       showTimestamp.value = props.bookmark.showTimestamp
       showEpisodeNumber.value = props.bookmark.showEpisode
+      updateEpisodeStyle()
       showSeasonNumber.value = props.bookmark.showSeason
     }
     updateData()
-
-    //state holders for bookmark
-    const episodeNumberStyle = ref()
-    const userMenuStyle = ref()
-    const showMenu = ref(false)
-    const showChangeImageMenu = ref(false)
-    const newSeriesImageURL = ref(null)
 
     //Menu togglers
     const toggleMenu = () => {
@@ -194,22 +215,7 @@ export default {
     }
 
     const updateEpisode = async () => {
-      if (seriesEpisode.value)
-      {
-        if (seriesEpisode.value < 0){
-          seriesEpisode.value = 0
-          episodeNumberStyle.value = "width: 15%"
-        }
-       else
-        {
-          var length = seriesEpisode.value.toString().length
-          var newSize = (length + 0.5) * 50
-          var style = "width: " + newSize + "px;"
-          episodeNumberStyle.value = style
-       }
-      }else{
-          episodeNumberStyle.value = "width: 15%"
-      }
+      updateEpisodeStyle()
       await modifyPlaceholder(bookmarkId, seriesSeason.value, seriesEpisode.value, seriesTimestamp.value)
     }
 
