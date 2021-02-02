@@ -362,15 +362,14 @@ export default {
   left: 0;
   width: 100%;
   min-height: 100%;
-  background-color: rgb(0, 0, 0);
-  opacity: 0.1;
+  background-color: rgba(0, 0, 0, 0.1);
   /* for button */
   display: flex;
   justify-content: center;
   align-items: center;
 }
 .image-overlay:hover{
-  opacity: 0.5;
+  background-color: rgba(0, 0, 0, 0.7);
 }
 .image-overlay:hover .change-image-button{
   display: block;
@@ -382,6 +381,9 @@ export default {
   height: 20%;
   color: white;
   cursor: pointer;
+}
+.change-image-button:hover{
+  text-decoration: underline;
 }
 .change-image-menu{
     z-index: 3;
