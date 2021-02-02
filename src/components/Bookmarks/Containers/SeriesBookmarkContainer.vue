@@ -68,7 +68,9 @@
           <label for="showEpisodeNumber">Show Episode Number: </label>
           <input type="checkbox" v-model="showEpisodeNumber" v-on:change="updateConfig">
         </div>
-        <div class="trashbin-icon"><TrashbinButton theme='light' @clicked="deleteThisBookmark" /></div>
+      </div>
+      <div class="trashbin-icon">
+        <TrashbinButton theme='light' @clicked="deleteThisBookmark" />
       </div>
     </div>
 
@@ -299,38 +301,32 @@ export default {
   align-items: center;
   color: white;
 }
-
 .menu-content{
- padding-left: 20%;
   max-width: 80%;
   display:flex;
   flex-flow: column wrap;
   justify-content: flex-start;
+  margin-bottom: 0;
 }
 .menu-title{
-  padding: 13% 0 8% 0;
+  margin: 15% 0 10% 0;
   font-size: 200%;
 }
-.bookmark-menu-dropdown-container .menu-bookmarkComplete{
-    margin: 0 0 7% 0;
+.menu-content .menu-bookmarkComplete{
+    margin: 0 0 2% 0;
 }
-.bookmark-menu-dropdown-container .menu-bookmarkComplete label{
+.menu-content .menu-bookmarkComplete label{
   font-size: 150%;
 }
-.bookmark-menu-dropdown-container div{
-  margin: 0 0 5% 0;
-  text-align: left;
-  width: 100%;
-}
-.bookmark-menu-dropdown-container label{
+.menu-content label{
   font-size: 120%;
   text-align: left;
   margin-right: 2%;
 }
 .bookmark-menu-dropdown-container .trashbin-icon{
+  margin-top: 1%;
   width: 40px; 
-  height: 50px;
-  align-self: center;
+  height: 52px;
 }
 
 .bookmark-complete-container{
