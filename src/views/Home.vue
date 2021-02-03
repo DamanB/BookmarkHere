@@ -13,13 +13,9 @@
 </template>
 
 <script>
-//depedencies
-import { useRouter } from "vue-router";
 //components
 import Authentication from '../components/Authentication/Authentication.vue';
 import Navbar from "@/components/Navigation/Navbar.vue";
-//composables
-import getUser from '@/composables/authentication/getUser'
 
 export default {
   name: "Home",
@@ -27,14 +23,7 @@ export default {
     Navbar,
     Authentication
   },
-  setup(){
-    const { user } = getUser()
-    const router = useRouter();
-    if (user.value)
-    {
-      router.push({ name: "UserBookmarks" });
-    }
-  }
+  setup(){}
 };
 </script>
 

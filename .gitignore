@@ -32,3 +32,4 @@ firebase.json
 .firebase/hosting.ZGlzdA.cache
 ui-debug.log
 firestore-debug.log
+firestore.rules
