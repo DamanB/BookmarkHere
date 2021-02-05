@@ -37,7 +37,7 @@ export default {
     //get user info
     const uid = user.value.uid
     loadSeriesBookmarks(uid)
-    const bookmarks = getAllBookmarks().series
+    var bookmarks = getAllBookmarks().series
 
     //add a new bookmark
     const addBookmark = async () => {
@@ -46,7 +46,9 @@ export default {
     };
 
     const reload = async () => {
+      console.log("reloading");
       loadSeriesBookmarks(uid)
+      bookmarks = getAllBookmarks().series
     }
 
     return { addBookmark, bookmarks, reload };
