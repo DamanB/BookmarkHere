@@ -1,5 +1,19 @@
 <template>
   <div class="header-container">
+    <div class="filter-container">
+      <div class="left-box filterbox"></div>
+      <div class="content-box filterbox">
+        <div class="search-filter">
+          <label for="search">Search: </label>
+          <input type="text" placeholder="Search Title">
+        </div>
+        <div class="checkbox-filter">
+          <label for="showCompleted">Show Completed Bookmarks: </label>
+          <input type="checkbox" v-model="showCompleted" @change="filterCompleted">
+        </div>
+      </div>
+      <div class="right-box filterbox"></div>
+    </div>
   </div>
   <div id="series-bookmarks-container">
       <div class="bookmarks-container" v-for="bookmark in bookmarks" :key="bookmark.bookmarkId">
@@ -36,27 +50,77 @@ export default {
 
     //get user info
     const uid = user.value.uid
-    loadSeriesBookmarks(uid)
-    var bookmarks = getAllBookmarks().series
+    //get bookmarks
+    const bookmarks = ref();
+
+    //filter
+    const showCompleted = ref(true)
+    const filterCompleted = async () => {
+      if (showCompleted.value)
+      {
+        bookmarks.value = getAllBookmarks().series.value
+      }
+      else
+      {
+        var temp = []
+        getAllBookmarks().series.value.forEach((bookmark) => {
+          if (!bookmark.completed)
+          {
+            temp.push(bookmark)
+          }
+        })    
+        bookmarks.value = temp  
+      }
+    }
 
     //add a new bookmark
     const addBookmark = async () => {
       var newBookmark = await addSeriesBookmark(uid)
-      bookmarks.value.push(newBookmark)
+      await reload()
     };
 
     const reload = async () => {
-      console.log("reloading");
-      loadSeriesBookmarks(uid)
-      bookmarks = getAllBookmarks().series
+      await loadSeriesBookmarks(uid)
+      bookmarks.value = getAllBookmarks().series.value
+      filterCompleted()
     }
+    //first time init
+    reload()
 
-    return { addBookmark, bookmarks, reload };
+    return { showCompleted, filterCompleted, addBookmark, bookmarks, reload };
   },
 };
 </script>
 
 <style scoped>
+.header-container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.filter-container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 5px 10px rgb(177, 177, 177);
+  margin-bottom: 1%;
+}
+.filterbox{
+  background-color: var(--mainColor2);
+  height: 50px;
+}
+.left-box{
+  width: 10px;
+  border-radius: 25% 0 0 25%;
+}
+.right-box{
+  width: 10px;
+  border-radius: 0 25% 25% 0;
+}
+.content-box{
+    width: 1750px;
+}
+
 #series-bookmarks-container {
   display: grid;
   grid-template-columns: repeat(3, auto);

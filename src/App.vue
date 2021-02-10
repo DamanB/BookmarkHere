@@ -20,6 +20,7 @@ export default {
 
 :root {
   --mainColor: rgb(9, 26, 73);
+  --mainColor2: white;
   --primColor: rgb(153, 35, 163);
   --secColor: rgb(0, 102, 255);
   --thirColor: orange;
