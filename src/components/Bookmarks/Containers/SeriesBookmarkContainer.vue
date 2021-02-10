@@ -1,7 +1,6 @@
 <template>
   <div class="box-container">
     <div class="container-content">
-
       <div class="container-image">
         <div v-if="seriesImageURL">
           <img :src="seriesImageURL" alt="">
@@ -13,19 +12,16 @@
           <div class="change-image-button" v-on:click="toggleChangeImageMenu">
             <span>Change Image</span>
           </div>
-        </div>
-  
+        </div>  
       </div>
 
       <div class="container-information">
         <label for="seriesTitle"></label>
-        <input type="text" class="input-text-field series-title" v-model="seriesTitle" v-on:change="updateTitle" placeholder="Click to add a title" >
-        
+        <input type="text" class="input-text-field series-title" v-model="seriesTitle" v-on:change="updateTitle" placeholder="Click to add a title" >  
         <div class="series-season-container" v-if="showSeasonNumber">
           <label for="seriesEpisode">Season: </label>
           <input type="number" min="0" class="input-number-field series-season-number" v-model="seriesSeason" v-on:change="updateSeason" placeholder="0">
         </div>
-
         <div class="series-episode-container">
           <div class="episode-number-container" v-if="showEpisodeNumber">
             <label for="seriesEpisode">Now on Episode: </label>
@@ -47,7 +43,7 @@
     </div>
 
     <div class="bookmark-menu-icon" v-on:click="toggleMenu">
-        <span v-bind:style="userMenuStyle">&#8942;</span> 
+      <ThreedotButton theme="light"/>
     </div>
     <div class="bookmark-menu-dropdown-container" v-if="showMenu">
       <div class="menu-content">
@@ -107,10 +103,13 @@ import useModifySeriesBookmark from '@/composables/firestore/modifyCommands/useM
 
 //componenets
 import TrashbinButton from '@/components/icons/Trashbin_Interactive.vue'
+import ThreedotButton from '@/components/icons/Threedot_Interactive.vue'
+
 
 export default {
   components: {
-    TrashbinButton
+    TrashbinButton,
+    ThreedotButton
   },
   props: ['bookmark'],
   setup(props, context){
@@ -273,17 +272,11 @@ export default {
 
 .bookmark-menu-icon{
   position: absolute;
-  top: 0;
-  right: 1%;
+  top: 10px;
+  right: 8px;
   z-index: 2;
-}
-.bookmark-menu-icon span{
-  color: white;
-  text-shadow: 1px 1px #000000;
-  font-size: 250%;
-  content: "\22EE";
-  cursor: pointer;
-  transition-duration: .1s;
+  width: 8px;
+  height: 24px;
 }
 
 .bookmark-menu-dropdown-container{
