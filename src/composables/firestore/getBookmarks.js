@@ -28,7 +28,7 @@ const getBookmarks = () => {
     {
         try{
             const collection = await projectFirestore.collection(collectionName)
-            const response = await collection.where('uid','==',uid).orderBy('createdAt').get()
+            const response = await collection.where('uid','==',uid).orderBy('completed').orderBy('createdAt').get()
             storage.value = response.docs.map(doc => {
                 return {...doc.data(), bookmarkId: doc.id}
             })
