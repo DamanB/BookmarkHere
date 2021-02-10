@@ -6,7 +6,7 @@ const addSeriesBookmark = async (uid) => {
     const newBookmark = 
     {
         uid: uid,
-        title: null,
+        title: "",
         season: null,
         episode: null,
         timestamp: null,

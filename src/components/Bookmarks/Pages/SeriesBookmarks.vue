@@ -5,7 +5,7 @@
       <div class="content-box filterbox">
         <div class="search-filter">
           <label for="search">Search: </label>
-          <input type="text" placeholder="Search Title">
+          <input type="text" v-model="searchQuery" placeholder="Search Title...">
         </div>
         <div class="checkbox-filter">
           <label for="showCompleted">Show Completed Bookmarks: </label>
@@ -16,7 +16,7 @@
     </div>
   </div>
   <div id="series-bookmarks-container">
-      <div class="bookmarks-container" v-for="bookmark in bookmarks" :key="bookmark.bookmarkId">
+      <div class="bookmarks-container" v-for="bookmark in filteredBookmarks" :key="bookmark.bookmarkId">
         <div class="container"><SeriesBookmarkContainer :bookmark="bookmark" @delete="reload" /></div>
       </div>
       <div class="bookmarks-container">
@@ -27,7 +27,7 @@
 
 <script>
 //dependencies
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 //composables
 import getUser from '@/composables/authentication/getUser'
 import getBookmarks from '@/composables/firestore/getBookmarks'
@@ -48,30 +48,24 @@ export default {
     const { getAllBookmarks, loadSeriesBookmarks} = getBookmarks();
     const { user } = getUser()
 
-    //get user info
+    //init
     const uid = user.value.uid
-    //get bookmarks
-    const bookmarks = ref();
-
-    //filter
+    //const bookmarks = ref();
     const showCompleted = ref(true)
-    const filterCompleted = async () => {
-      if (showCompleted.value)
-      {
-        bookmarks.value = getAllBookmarks().series.value
-      }
-      else
-      {
-        var temp = []
-        getAllBookmarks().series.value.forEach((bookmark) => {
-          if (!bookmark.completed)
-          {
-            temp.push(bookmark)
-          }
-        })    
-        bookmarks.value = temp  
-      }
+    const searchQuery = ref("")
+
+    //reload the page
+    const reload = async () => {
+      await loadSeriesBookmarks(uid)
     }
+    reload()
+
+    const filteredBookmarks = computed(() => {
+      return getAllBookmarks().series.value.filter((bookmark) => 
+      bookmark.title.toLowerCase().includes(searchQuery.value.toLowerCase()) //for Search filter
+      && (showCompleted.value || (!showCompleted.value && !bookmark.completed)) //for completed filter
+      )
+    })
 
     //add a new bookmark
     const addBookmark = async () => {
@@ -79,15 +73,7 @@ export default {
       await reload()
     };
 
-    const reload = async () => {
-      await loadSeriesBookmarks(uid)
-      bookmarks.value = getAllBookmarks().series.value
-      filterCompleted()
-    }
-    //first time init
-    reload()
-
-    return { showCompleted, filterCompleted, addBookmark, bookmarks, reload };
+    return { filteredBookmarks, showCompleted, searchQuery, addBookmark, reload };
   },
 };
 </script>
