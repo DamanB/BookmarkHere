@@ -1,19 +1,16 @@
 <template>
   <div class="header-container">
     <div class="filter-container">
-      <div class="left-box filterbox"></div>
-      <div class="content-box filterbox">
-        <div class="search-filter">
+        <div class="search-filter input-container">
           <label for="search">Search: </label>
           <input type="text" v-model="searchQuery" placeholder="Search Title...">
         </div>
-        <div class="checkbox-filter">
+        <div class="completed-filter input-container">
           <label for="showCompleted">Show Completed Bookmarks: </label>
           <input type="checkbox" v-model="showCompleted" @change="filterCompleted">
         </div>
-      </div>
-      <div class="right-box filterbox"></div>
     </div>
+    <div class="header-container-bottom"></div>
   </div>
   <div id="series-bookmarks-container">
       <div class="bookmarks-container" v-for="bookmark in filteredBookmarks" :key="bookmark.bookmarkId">
@@ -80,31 +77,58 @@ export default {
 
 <style scoped>
 .header-container{
+  width: 90%;
+  margin: 1% 0 2% 5%;
+
+  height: 60px;
+  box-shadow: 0 5px 10px rgb(177, 177, 177);
+  background-color: var(--mainColor2);
+  border-radius: 7px 7px;
+
   display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-direction: column;
 }
 .filter-container{
+  width: 100%;
+  height: 95%;
+
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 5px 10px rgb(177, 177, 177);
-  margin-bottom: 1%;
+  flex-flow: row nowrap;
 }
-.filterbox{
-  background-color: var(--mainColor2);
-  height: 50px;
+.header-container-bottom{
+  min-width: 100%;
+  height: 5%;
+  background: linear-gradient(to right, var(--secColor) 0, var(--primColor) 66%, var(--thirColor) 100%);
+  border-radius: 0 0 10px 10px;
 }
-.left-box{
-  width: 10px;
-  border-radius: 25% 0 0 25%;
+.input-container{
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: baseline;
+    margin-right: 2%;
 }
-.right-box{
-  width: 10px;
-  border-radius: 0 25% 25% 0;
+
+.search-filter{
+    margin-left: 2%;
 }
-.content-box{
-    width: 1750px;
+.search-filter label{
+  font-size: 120%;
+  margin-right: 10px;
+}
+.search-filter input{
+  font-style: italic;
+  font-size: 100%;
+  width: 250px;
+}
+
+.completed-filter{
+  align-items: center;
+}
+.completed-filter label{
+  margin-right: 5px;
+  font-size: 100%;
 }
 
 #series-bookmarks-container {
