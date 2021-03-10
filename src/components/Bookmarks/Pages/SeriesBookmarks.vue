@@ -48,7 +48,7 @@ export default {
     //init
     const uid = user.value.uid
     //const bookmarks = ref();
-    const showCompleted = ref(true)
+    const showCompleted = ref(false)
     const searchQuery = ref("")
 
     //reload the page
