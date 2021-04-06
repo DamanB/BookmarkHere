@@ -16,6 +16,7 @@ export default {
 
 #app {
   font-family: "Montserrat", sans-serif;
+  font-size: 14px !important;
 }
 
 :root {
@@ -29,5 +30,17 @@ export default {
 body {
   background-color: rgb(212, 212, 212);
   margin: 0px;
+}
+
+@media screen and (min-width: 1200px) {
+#app {
+  font-size: 14px !important;
+}
+}
+
+@media screen and (min-width: 1620px) {
+#app {
+  font-size: 16px !important;
+}
 }
 </style>
