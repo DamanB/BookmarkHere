@@ -1,9 +1,9 @@
 const getBookmarkCollections = () => {
 
     const collections = {
-        series: "Series",
-        movies: "Movies",
-        books: "Books"
+        series: "SeriesBookmarks",
+        movies: "MoviesBookmarks",
+        books: "BooksBookmarks"
     }
 
     const getCollections = () => {
