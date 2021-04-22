@@ -9,7 +9,9 @@ This web app is built using Vue.js 3, and Firebase hosting/database services
 I have made the decision to only upload the /src file of the application for public view. 
 
 ## What I Learned
--  Vue.js 3 JavaScript framework (with Composition API)
-- Deploying Firebase Database
-  - Connecting to application
+- Vue.js 3 JavaScript framework (with Composition API)
+- Firebase
+  - Deploying and connecting to a database
+  - Establishing authentication services
+  - Hosting a web app
 - Responsive CSS Media Queries
